@@ -5,6 +5,3 @@ using System;
 // Student Name : Heng Zhe Kai
 // Partner Name : Gan Yu Hong
 //==========================================
-
-//dwidjaidwdjiad
-
