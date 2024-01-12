@@ -12,17 +12,17 @@ using System.Threading.Tasks;
 
 namespace S10258524_PRG2Assignment
 {
-    internal class Cone : IceCream
+    internal class Flavour
     {
-        public bool Dipped { get; set; }
-        public Cone() { }
-        public Cone(string options, int scoops, List<Flavour> flavours, List<Topping> toppings, bool dipped) : base("Cone", scoops, flavours, toppings)
+        public string Type { get; set; }
+        public bool Premimum { get; set; }
+        public int Quantity { get; set; }
+        public Flavour() { }
+        public Flavour(string type, bool premium, int quantity)
         {
-            Dipped = dipped;
-        }
-        public override double CalculatePrice()
-        {
-            
+            Type = type;
+            Premimum = premium;
+            Quantity = quantity;
         }
         public override string ToString()
         {

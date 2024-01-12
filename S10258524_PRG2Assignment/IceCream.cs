@@ -16,8 +16,8 @@ namespace S10258524_PRG2Assignment
     {
         public string Option { get; set; }
         public int Scoops { get; set; }
-        public List<Flavour> Flavours { get; set; }
-        public List<Topping> Toppings { get; set; }
+        public List<Flavour> Flavours { get; set; } = new List<Flavour>();
+        public List<Topping> Toppings { get; set; } = new List<Topping>();
         public IceCream() { }
         public IceCream(string options, int scoops, List<Flavour> flavours, List<Topping> toppings)
         {
