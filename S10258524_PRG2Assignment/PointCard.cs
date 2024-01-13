@@ -16,7 +16,7 @@ namespace S10258524_PRG2Assignment
         public string Tier { get; set; }
 
         public PointCard() { }
-        public PointCard(int points, int punchCard) { points = Points; punchCard=PunchCards; }
+        public PointCard(int points, int punchCard) { Points = points; PunchCard=punchCards; }
         public AddPoints
     }
 }
