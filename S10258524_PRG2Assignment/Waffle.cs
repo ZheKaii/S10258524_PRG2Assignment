@@ -22,7 +22,8 @@ namespace S10258524_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            
+            double price = 0;
+            return price;
         }
         public override string ToString()
         {
