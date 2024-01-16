@@ -21,18 +21,6 @@ namespace S10258524_PRG2Assignment
             Points = points;
             PunchCards = punchCard;
         }
-        public int AddPoints()
-        {
-
-        }
-        public int RedeemPoints()
-        {
-
-        }
-        public Punch()
-        {
-
-        }
         public override string ToString()
         {
             return base.ToString();

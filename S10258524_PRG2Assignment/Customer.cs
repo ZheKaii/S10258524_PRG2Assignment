@@ -24,14 +24,6 @@ namespace S10258524_PRG2Assignment
             MemberId = memberId;
             Dob = dob;
         }
-        public Order MakeOrder()
-        {
-
-        }
-        public bool IsBirthday()
-        {
-
-        }
         public override string ToString()
         {
             return base.ToString();
