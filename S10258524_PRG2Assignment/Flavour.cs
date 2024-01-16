@@ -24,7 +24,7 @@ namespace S10258524_PRG2Assignment
         public Flavour(string type, bool premium, int quantity)
         {
             Type = type;
-            Premimum = premium;
+            Premium = premium;
             Quantity = quantity;
         }
         public override string ToString()
