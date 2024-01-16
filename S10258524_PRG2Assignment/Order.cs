@@ -25,6 +25,22 @@ namespace S10258524_PRG2Assignment
             Id = id;
             TimeReceived = timeReceived;
         }
+        public int ModifyIceCream()
+        {
+            
+        }
+        public IceCream AddIceCream()
+        {
+
+        }
+        public int DeleteIceCream()
+        {
+
+        }
+        public double CalculateTotal()
+        {
+
+        }
         public override string ToString()
         {
             return base.ToString();

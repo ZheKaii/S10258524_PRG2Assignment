@@ -14,9 +14,7 @@ namespace S10258524_PRG2Assignment
 {
     internal class Customer
     {
-        private string name;
-        private int memberId;
-        private DateTime dob;
+    
         public string Name { get; set; }
         public int MemberId { get; set; }
         public DateTime Dob { get; set; }
@@ -29,6 +27,14 @@ namespace S10258524_PRG2Assignment
             Name = name;
             MemberId = memberId;
             Dob = dob;
+        }
+        public Order MakeOrder()
+        {
+
+        }
+        public bool IsBirthday()
+        {
+
         }
         public override string ToString()
         {
