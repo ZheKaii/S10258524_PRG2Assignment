@@ -14,8 +14,9 @@ namespace S10258524_PRG2Assignment
 {
     internal class Waffle : IceCream
     {
+        private string waffleFlavour;
         public string WaffleFlavour { get; set; }
-        public Waffle() { }
+        public Waffle() : base() { }
         public Waffle(string options, int scoops, List<Flavour> flavours, List<Topping> toppings, string waffleFlavour) : base("Waffle", scoops, flavours, toppings)
         {
             WaffleFlavour = waffleFlavour;

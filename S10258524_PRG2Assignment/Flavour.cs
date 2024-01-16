@@ -14,6 +14,9 @@ namespace S10258524_PRG2Assignment
 {
     internal class Flavour
     {
+        private string type;
+        private bool premium;
+        private int quantity;
         public string Type { get; set; }
         public bool Premimum { get; set; }
         public int Quantity { get; set; }

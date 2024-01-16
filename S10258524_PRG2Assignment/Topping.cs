@@ -14,6 +14,7 @@ namespace S10258524_PRG2Assignment
 {
     internal class Topping
     {
+        private string type;
         public string Type { get; set; }
         public Topping() { }
         public Topping(string type)
@@ -22,7 +23,7 @@ namespace S10258524_PRG2Assignment
         }
         public override string ToString()
         {
-            return base.ToString();
+            return "Type of Topping(s): " + Type;
         }
     }
 }

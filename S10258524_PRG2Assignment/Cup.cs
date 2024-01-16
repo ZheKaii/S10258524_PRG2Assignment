@@ -14,7 +14,7 @@ namespace S10258524_PRG2Assignment
 {
     internal class Cup : IceCream
     {
-        public Cup() { }
+        public Cup() : base() { }
         public Cup(string options, int scoops, List<Flavour> flavours, List<Topping> toppings) : base("Cup", scoops, flavours, toppings)
         {
         

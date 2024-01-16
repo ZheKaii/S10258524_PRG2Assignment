@@ -14,6 +14,10 @@ namespace S10258524_PRG2Assignment
 {
     abstract class IceCream
     {
+        private string option;
+        private int scoops;
+        private List<Flavour> flavours;
+        private List<Topping> toppings;
         public string Option { get; set; }
         public int Scoops { get; set; }
         public List<Flavour> Flavours { get; set; } = new List<Flavour>();

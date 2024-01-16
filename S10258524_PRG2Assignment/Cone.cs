@@ -14,8 +14,9 @@ namespace S10258524_PRG2Assignment
 {
     internal class Cone : IceCream
     {
+        private bool dipped;
         public bool Dipped { get; set; }
-        public Cone() { }
+        public Cone() : base() { }
         public Cone(string options, int scoops, List<Flavour> flavours, List<Topping> toppings, bool dipped) : base("Cone", scoops, flavours, toppings)
         {
             Dipped = dipped;
