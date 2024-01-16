@@ -21,21 +21,33 @@ namespace S10258524_PRG2Assignment
         }
         public override double CalculatePrice()
         {
-            double price = 0;
-            string scoops = "";
-            if (scoops == "Single")
+            double totalprice = 0.00;
+            double normalprice = 4.00;
+            double twiceprice = 5.50;
+            double tripleprice = 6.50;
+            if (Scoops == 1)
             {
-                price = 4.00;
+                totalprice += normalprice;
             }
-            else if (scoops == "Double")
+            else if (Scoops == 2)
             {
-                price = 5.50;
+                totalprice += twiceprice;
             }
-            else if (scoops == "Triple")
+            else if (Scoops == 3)
             {
-                price = 6.50;
+                totalprice += tripleprice;
             }
-            return price;
+            double premiumflavourprice = 2.00;
+            foreach (Flavour f in Flavours)
+            {
+                if (f.Premium)
+                {
+                    totalprice += premiumflavourprice * f.Quantity;
+                }
+            }
+            int toppingsprice = 1;
+            totalprice += (toppingsprice * Toppings.Count);
+            return totalprice;
         }
         public override string ToString()
         {
