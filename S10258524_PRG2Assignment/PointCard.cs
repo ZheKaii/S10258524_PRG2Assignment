@@ -26,18 +26,6 @@ namespace S10258524_PRG2Assignment
             PunchCards = punchCard;
             Tier = tier;
         }
-        public int AddPoints()
-        {
-
-        }
-        public int RedeemPoints()
-        {
-
-        }
-        public Punch()
-        {
-
-        }
         public override string ToString()
         {
             return base.ToString();
