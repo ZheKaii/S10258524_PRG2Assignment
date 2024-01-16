@@ -23,9 +23,9 @@ namespace S10258524_PRG2Assignment
         {
             
         }
-        public void AddIceCream(IceCream iceCream)
+        public IceCream AddIceCream()
         {
-            
+
         }
         public int DeleteIceCream()
         {

@@ -21,18 +21,16 @@ namespace S10258524_PRG2Assignment
             Tier = tier;
         }
         public int AddPoints()
-        {   
-            Points += Points;
-            return Points;
+        {
+
         }
         public int RedeemPoints()
         {
-            int money = Points;
-            return money;
+
         }
         public Punch()
         {
-            if (PunchCards == 10) { }
+
         }
         public override string ToString()
         {
