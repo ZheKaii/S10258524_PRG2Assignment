@@ -30,21 +30,22 @@ namespace S10258524_PRG2Assignment
             Id = id;
             TimeReceived = timeReceived;
         }
-        public int ModifyIceCream()
+        public void ModifyIceCream(int index)
         {
             
         }
-        public IceCream AddIceCream()
+        public void AddIceCream(IceCream iceCream)
         {
-
+            iceCreamsList.Add(iceCream);
         }
-        public int DeleteIceCream()
+        public void DeleteIceCream(int index)
         {
+            iceCreamsList.RemoveAt(index);
 
         }
         public double CalculateTotal()
         {
-
+            return iceCreamsList.Count;
         }
         public override string ToString()
         {

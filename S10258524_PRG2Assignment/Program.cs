@@ -38,7 +38,12 @@ namespace S10258524_PRG2Assignment
                 Customer c = customers[i];
                 Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
             }
-
         }
+        static void main(string[] arg)
+        {
+            string[] all_line = File.ReadAllLines("option.csv");
+            string[] headers = all_line[0].Split(",");
+        }
+
     }
 }
