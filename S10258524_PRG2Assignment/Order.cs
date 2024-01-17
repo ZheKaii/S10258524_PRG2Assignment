@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,21 +20,22 @@ namespace S10258524_PRG2Assignment
             Id = id;
             TimeReceived = timeReceived;
         }
-        public int ModifyIceCream()
+        public void ModifyIceCream(int index)
         {
             
-        }
-        public IceCream AddIceCream()
-        {
 
         }
-        public int DeleteIceCream()
+        public void AddIceCream(IceCream iceCream)
         {
-
+            IceCreamList.Add(iceCream);
+        }
+        public void DeleteIceCream(int index)
+        {
+            IceCreamList.RemoveAt(index);
         }
         public double CalculateTotal()
         {
-
+            return IceCreamList.Count;
         }
         public override string ToString()
         {

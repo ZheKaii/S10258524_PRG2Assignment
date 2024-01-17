@@ -20,17 +20,29 @@ namespace S10258524_PRG2Assignment
             PunchCards = punchCard;
             Tier = tier;
         }
-        public int AddPoints()
+        public void AddPoints(int amount)
         {
-
+            int earnedPoints = (int)Math.Floor(amount * 0.72);
+            Points += earnedPoints;
+            Punch();
         }
-        public int RedeemPoints()
+        public void RedeemPoints(int amount)
         {
-
+            if (Tier == "Silver" || Tier == "Gold")
+            {
+                double discount = amount * 0.02;
+                Points -= amount;
+                
+            }
         }
-        public Punch()
+        public void Punch()
         {
-
+            PunchCards++;
+            if (PunchCards == 10)
+            {
+                PunchCards = 0;
+                RedeemPoints(2); 
+            }
         }
         public override string ToString()
         {

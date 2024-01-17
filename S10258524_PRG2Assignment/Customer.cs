@@ -24,11 +24,12 @@ namespace S10258524_PRG2Assignment
         }
         public Order MakeOrder()
         {
-
+            CurrentOrder = new Order();
+            return CurrentOrder;
         }
         public bool IsBirthday()
         {
-
+            return DateTime.Now.Date == Dob.Date;
         }
         public override string ToString()
         {
