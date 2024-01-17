@@ -14,6 +14,10 @@ namespace S10258524_PRG2Assignment
 {
     internal class Order
     {
+        private int id;
+        private DateTime timeReceived;
+        private DateTime? timeFulfilled;
+        private List<IceCream> iceCreamsList;
         public int Id { get; set; }
         public DateTime TimeReceived { get; set; }
         public DateTime? TImeFulfilled { get; set; }

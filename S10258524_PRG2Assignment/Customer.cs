@@ -14,6 +14,12 @@ namespace S10258524_PRG2Assignment
 {
     internal class Customer
     {
+        private string name;
+        private int memberid;
+        private DateTime dob;
+        private Order currentOrder;
+        private List<Order> orderHistory;
+        private PointCard rewards;
     
         public string Name { get; set; }
         public int MemberId { get; set; }
@@ -30,7 +36,7 @@ namespace S10258524_PRG2Assignment
         }
         public override string ToString()
         {
-            return Name + MemberId + Dob;
+            return Name + MemberId + Dob + Rewards;
         }
     }
 }

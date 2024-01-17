@@ -15,7 +15,7 @@ namespace S10258524_PRG2Assignment
             // Basic Feature 1
             string[] all_line = File.ReadAllLines("customers.csv");
             string[] headers = all_line[0].Split(",");
-            Console.WriteLine("{0,-11}{1,-10}{2,-5}{3,-18}{4,-18}{5,-11}",
+            Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}",
                 headers[0], headers[1], headers[2], headers[3], headers[4], headers[5]);
 
             List<Customer> customers = new List<Customer>();
@@ -28,13 +28,15 @@ namespace S10258524_PRG2Assignment
                 string membershipstatus = cols[3];
                 int membershippoints = int.Parse(cols[4]);
                 int punchcard = int.Parse(cols[5]);
+                PointCard pointCard = new PointCard(membershippoints, punchcard, membershipstatus);
                 Customer customer = new Customer(name, memberid, dob);
+                customer.Rewards = pointCard;
                 customers.Add(customer);
             }
             for (int i = 0; i <customers.Count; i++)
             {
                 Customer c = customers[i];
-                Console.WriteLine("{0,-11}{1,-10}{2,-5}", c.Name, c.MemberId, c.Dob);
+                Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
             }
 
         }
