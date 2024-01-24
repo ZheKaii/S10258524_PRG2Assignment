@@ -14,7 +14,12 @@ namespace S10258524_PRG2Assignment
 {
     internal class Customer
     {
-    
+        private string name;
+        private int memberid;
+        private DateTime dob;
+        private Order currentOrder;
+        private List<Order> ordersHistory;
+        private PointCard rewards;
         public string Name { get; set; }
         public int MemberId { get; set; }
         public DateTime Dob { get; set; }

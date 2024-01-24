@@ -36,16 +36,15 @@ namespace S10258524_PRG2Assignment
         }
         public void AddIceCream(IceCream iceCream)
         {
-            iceCreamsList.Add(iceCream);
+            IceCreamList.Add(iceCream);
         }
         public void DeleteIceCream(int index)
         {
-            iceCreamsList.RemoveAt(index);
-
+            IceCreamList.RemoveAt(index);
         }
         public double CalculateTotal()
         {
-            return iceCreamsList.Count;
+            return IceCreamList.Count;
         }
         public override string ToString()
         {
