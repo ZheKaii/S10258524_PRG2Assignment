@@ -3,9 +3,9 @@ using System.IO;
 using System.Collections.Generic;
 
 //==========================================
-// Student Number : S10258524
-// Student Name : Heng Zhe Kai
-// Partner Name : Gan Yu Hong
+// Student Number : S10258441
+// Student Name : Gan Yu Hong
+// Partner Name : Heng Zhe Kai
 //==========================================
 
 namespace S10258524_PRG2Assignment
@@ -40,6 +40,7 @@ namespace S10258524_PRG2Assignment
                 Customer c = customers[i];
                 Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
             }
+            
             Main2(args);
         }
 
@@ -76,8 +77,5 @@ namespace S10258524_PRG2Assignment
 
             }
         }
-        
-        //Basic Feature 3 - Heng Zhe Kai
-
     }
 }
