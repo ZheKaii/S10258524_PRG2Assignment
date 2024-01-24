@@ -48,7 +48,7 @@ namespace S10258524_PRG2Assignment
         {
             string[] all_line = File.ReadAllLines("orders.csv");
             string[] headers = all_line[0].Split(",");
-            Console.WriteLine("{0,2}  {1,-8}  {2,-12}  {3,-14}  {4,-6}  {5,-6}  {6,-6}  {7,-14}  {8,-8}  {9,-8}  {10,-8} {11,-8}  {12,-8}  {13,-8}  {14,-8}",
+            Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
                 headers[0], headers[1], headers[2], headers[3], headers[4], headers[5], headers[6], headers[7],
                 headers[8], headers[9], headers[10], headers[11], headers[12], headers[13], headers[14]);
             List<Order> orders = new List<Order>();
@@ -61,7 +61,7 @@ namespace S10258524_PRG2Assignment
                 DateTime? timefulfilled = DateTime.ParseExact(cols[3], "dd/MM/yyyy HH:mm", null);
                 string option = cols[4];
                 int scoops = int.Parse(cols[5]);
-                bool dipped = Convert.ToBoolean(cols[6]);
+                string dipped = cols[6];
                 string waffleflavour = cols[7];
                 string flavour1 = cols[8];
                 string flavour2 = cols[9];
@@ -70,6 +70,10 @@ namespace S10258524_PRG2Assignment
                 string topping2 = cols[12];
                 string topping3 = cols[13];
                 string topping4 = cols[14];
+                Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
+                id, memberid, timeReceived, timefulfilled, option, scoops , dipped, waffleflavour, flavour1, flavour2, flavour3, topping1, topping2, topping3, topping4);
+
+
             }
         }
         

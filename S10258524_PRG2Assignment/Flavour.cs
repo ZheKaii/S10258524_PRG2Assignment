@@ -21,6 +21,7 @@ namespace S10258524_PRG2Assignment
         public bool Premium { get; set; }
         public int Quantity { get; set; }
         public Flavour() { }
+        
         public Flavour(string type, bool premium, int quantity)
         {
             Type = type;
