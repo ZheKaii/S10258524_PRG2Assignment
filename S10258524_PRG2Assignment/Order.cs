@@ -21,7 +21,7 @@ namespace S10258524_PRG2Assignment
         private List<IceCream> iceCreamsList;
         public int Id { get; set; }
         public DateTime TimeReceived { get; set; }
-        public DateTime? TImeFulfilled { get; set; }
+        public DateTime? TimeFulfilled { get; set; }
         public List<IceCream> IceCreamList { get; set; } = new List<IceCream>();
 
         public Order() { }
@@ -44,11 +44,16 @@ namespace S10258524_PRG2Assignment
         }
         public double CalculateTotal()
         {
-            return IceCreamList.Count;
+            double total = 0;
+            for (int i = 0; i < IceCreamList.Count; i++)
+            {
+                total += IceCreamList[i].CalculatePrice();
+            }
+            return total;
         }
         public override string ToString()
         {
-            return base.ToString();
+            return "Id: " + Id + "Time received: " + TimeReceived + "Time fulfilled: " + TimeFulfilled;
         }
     }
 }

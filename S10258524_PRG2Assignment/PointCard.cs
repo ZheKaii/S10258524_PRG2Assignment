@@ -42,7 +42,6 @@ namespace S10258524_PRG2Assignment
             {
                 double discount = amount * 0.02;
                 Points -= amount;
-                
             }
         }
         public void Punch()
@@ -51,13 +50,12 @@ namespace S10258524_PRG2Assignment
             if (PunchCards == 10)
             {
                 PunchCards = 0;
-              
             }
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return Points + PunchCards + Tier;
         }
     }
 }
