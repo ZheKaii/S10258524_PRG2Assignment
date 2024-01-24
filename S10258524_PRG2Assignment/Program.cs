@@ -72,12 +72,7 @@ namespace S10258524_PRG2Assignment
                 string topping4 = cols[14];
                 Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
                 id, memberid, timeReceived, timefulfilled, option, scoops , dipped, waffleflavour, flavour1, flavour2, flavour3, topping1, topping2, topping3, topping4);
-
-
             }
         }
-        
-        //Basic Feature 3 - Heng Zhe Kai
-
     }
 }
