@@ -40,6 +40,7 @@ namespace S10258524_PRG2Assignment
                 Customer c = customers[i];
                 Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
             }
+            Main2(args);
         }
 
         //Basic Feature 2 - Gan Yu Hong
@@ -47,11 +48,31 @@ namespace S10258524_PRG2Assignment
         {
             string[] all_line = File.ReadAllLines("orders.csv");
             string[] headers = all_line[0].Split(",");
-            Console.WriteLine("{0,2}{1,10}{2,10}{3,10}{4,10}{5,10}{6,10}{7,10}{8,10}{9,10}{10,10}{11,10}{12,10}{13,10}{14,10}{15,10}",
+            Console.WriteLine("{0,2}  {1,-8}  {2,-12}  {3,-14}  {4,-6}  {5,-6}  {6,-6}  {7,-14}  {8,-8}  {9,-8}  {10,-8} {11,-8}  {12,-8}  {13,-8}  {14,-8}",
                 headers[0], headers[1], headers[2], headers[3], headers[4], headers[5], headers[6], headers[7],
-                headers[8], headers[9], headers[10], headers[11], headers[12], headers[13], headers[14], headers[15]);
+                headers[8], headers[9], headers[10], headers[11], headers[12], headers[13], headers[14]);
+            List<Order> orders = new List<Order>();
+            for (int i = 1;  i < all_line.Length; i++)
+            {
+                string[] cols = all_line[i].Split(",");
+                int id = int.Parse(cols[0]);
+                int memberid = int.Parse(cols[1]);
+                DateTime timeReceived = DateTime.ParseExact(cols[2], "dd/MM/yyyy HH:mm", null);
+                DateTime? timefulfilled = DateTime.ParseExact(cols[3], "dd/MM/yyyy HH:mm", null);
+                string option = cols[4];
+                int scoops = int.Parse(cols[5]);
+                bool dipped = Convert.ToBoolean(cols[6]);
+                string waffleflavour = cols[7];
+                string flavour1 = cols[8];
+                string flavour2 = cols[9];
+                string flavour3 = cols[10];
+                string topping1 = cols[11];
+                string topping2 = cols[12];
+                string topping3 = cols[13];
+                string topping4 = cols[14];
+            }
         }
-
+        
         //Basic Feature 3 - Heng Zhe Kai
 
     }
