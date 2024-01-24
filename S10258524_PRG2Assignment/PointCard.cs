@@ -51,7 +51,7 @@ namespace S10258524_PRG2Assignment
             if (PunchCards == 10)
             {
                 PunchCards = 0;
-                RedeemPoints(2); 
+              
             }
         }
 
