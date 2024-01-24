@@ -41,7 +41,15 @@ namespace S10258524_PRG2Assignment
         }
         public bool IsBirthday()
         {
-            return DateTime.Now.Date == Dob.Date;
+            DateTime dateTime = DateTime.Today;
+            if (dateTime == Dob)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         public override string ToString()
         {
