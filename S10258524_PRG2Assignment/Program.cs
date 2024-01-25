@@ -57,7 +57,43 @@ namespace S10258524_PRG2Assignment
                 sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
             }
             Console.WriteLine("You have successfully registered as a membership in our system!");
-            
+            Console.WriteLine();
+
+            // Basic Feature 4 - Heng Zhe Kai
+            for (int i = 0; i < customers.Count;i++)
+            {
+                Customer c = customers[i];
+                Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
+            }
+            Customer? Search(List<Customer> customerslist, string orderingcustomer)
+            {
+                foreach(Customer customer in customerslist)
+                {
+                    if (customer.Name == orderingcustomer)
+                    {
+                        return customer;
+                    }
+                }
+                return null;
+            }
+            Console.WriteLine("Please select a customer from the list: ");
+            string orderingcustomer = Console.ReadLine();
+            Customer foundcustomername = Search(customers, orderingcustomer);
+            if (foundcustomername == null)
+            {
+                Console.WriteLine("Unable to find the customer name. Please try again.");
+            }
+            else
+            {
+                Console.Write("Enter your ice cream option: ");
+                string option = Console.ReadLine();
+                Console.WriteLine("Enter the number of scoops: ");
+                int scoops = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Enter your flavour(s): ");
+                List<Flavour> flavourchosen = new List<Flavour>();
+
+            }
+
             // For Yu Hong to do his features
             Main2(args);
         }
