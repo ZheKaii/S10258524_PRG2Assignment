@@ -90,8 +90,11 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine("Enter the number of scoops: ");
                 int scoops = Convert.ToInt32(Console.ReadLine());
                 Console.Write("Enter your flavour(s): ");
-                List<Flavour> flavourchosen = new List<Flavour>();
-
+                string type = Console.ReadLine();
+                List<Flavour> flavours = new List<Flavour>();
+                Console.WriteLine("Enter your topping(s): ");
+                string topping = Console.ReadLine();
+                List<Topping> toppings = new List<Topping>();
             }
 
             // For Yu Hong to do his features
