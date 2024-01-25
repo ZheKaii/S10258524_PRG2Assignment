@@ -40,6 +40,25 @@ namespace S10258524_PRG2Assignment
                 Customer c = customers[i];
                 Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
             }
+            Console.WriteLine();
+
+            // Basic Feature 3 - Heng Zhe Kai
+            Console.Write("Enter your name: ");
+            string customername = Console.ReadLine();
+            Console.Write("Enter your ID number: ");
+            int customerid = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter your date of birth: ");
+            DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
+            Customer c1 = new Customer(customername, customerid, customerdob);
+            PointCard p1 = new PointCard(0, 0, "Ordinary");
+            c1.Rewards = p1;
+            using (StreamWriter sw = new StreamWriter("customers.csv", true))
+            {
+                sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
+            }
+            Console.WriteLine("You have successfully registered as a membership in our system!");
+            
+            // For Yu Hong to do his features
             Main2(args);
         }
 
