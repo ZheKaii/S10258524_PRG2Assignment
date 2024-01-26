@@ -154,6 +154,85 @@ namespace S10258524_PRG2Assignment
                     List<Topping> toppings = new List<Topping>();
                 }
             }
+            // Basic Feature 5 - Gan Yu Hong
+            void Displayorderdetail()
+            {
+                while (true)
+                {
+                    try
+                    {
+                        foreach (Customer customer in customers)
+                        {
+                            Console.WriteLine(customer.Name);
+                        }
+                        Customer? Search(List<Customer> customerslist, string customername)
+                        {
+                            foreach (Customer customer in customerslist)
+                            {
+                                if (customer.Name == customername)
+                                {
+                                    return customer;                                   
+                                }
+                            }
+                            return null;
+                        }
+                        Order SearchOrder(List<Order> orderslist, Customer customer)
+                        {
+                            foreach (Order order in customer.OrderHistory)
+                            {
+                                foreach (Order order2 in orderslist)
+                                {
+                                    if (order.Id == order2.Id)
+                                    {
+                                        Console.WriteLine($"found!!!!");
+
+                                        return order2;
+                                    }
+                                }
+                            }
+                            return null;
+                        }
+
+
+                        Console.Write("Please select a customer from the list: ");
+                        string find = Console.ReadLine();
+                        Customer foundcustomer = Search(customers, find);
+                        if (foundcustomer == null)
+                        {
+                            Console.WriteLine("Unable to find the customer name. Please try again.");
+                        }
+                        else
+                        {
+                            int memberid = foundcustomer.MemberId;
+                            Order order = SearchOrder(orders, foundcustomer);
+                            if (order != null)
+                            {
+                                Console.WriteLine("good");
+                            }
+                            else 
+                            { 
+                                Console.WriteLine("bad"+memberid); 
+                            }
+                        }
+
+                        break;
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("error");
+                        throw;
+                    }
+                }  
+            }
+
+            void orderlist()
+            {
+                for (int i = 0; i < orders.Count; i++)
+                {
+                    Console.WriteLine(orders[i]);
+                    Console.WriteLine("finish");
+                }
+            }
 
             while (true)
             {
@@ -180,6 +259,14 @@ namespace S10258524_PRG2Assignment
                 else if (option == 4)
                 {
                     Createcustomerorder();
+                }
+                else if (option == 5)
+                {
+                    Displayorderdetail();
+                }
+                else if (option == 6)
+                {
+                    orderlist();
                 }
                 else
                 {

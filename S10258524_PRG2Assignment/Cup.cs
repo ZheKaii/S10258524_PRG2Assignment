@@ -42,7 +42,7 @@ namespace S10258524_PRG2Assignment
             {
                 if (f.Premium)
                 {
-                    totalprice += premiumflavourprice * f.Quantity;
+                    totalprice += premiumflavourprice;
                 }
             }
             int toppingsprice = 1;
