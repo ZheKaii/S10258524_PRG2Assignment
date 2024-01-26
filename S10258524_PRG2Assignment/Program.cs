@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.IO.Pipes;
 
 //==========================================
 // Student Number : S10258441
@@ -61,6 +62,17 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
+            bool checkPremium(string flavour)
+            {
+                if (flavour == "Durian" || flavour == "Ube" || flavour ==" Sea Salt")
+                {
+                    
+                    return true;
+                }
+                return false;
+            }
+
+
             List<Order> orders = new List<Order>();
             void Displayorders()
             {
@@ -79,17 +91,40 @@ namespace S10258524_PRG2Assignment
                     DateTime? timefulfilled = DateTime.ParseExact(cols[3], "dd/MM/yyyy HH:mm", null);
                     string option = cols[4];
                     int scoops = int.Parse(cols[5]);
-                    string dipped = cols[6];
+                    bool dipped = bool.TryParse(cols[6],out dipped);
                     string waffleflavour = cols[7];
                     string flavour1 = cols[8];
+                    bool premium1 = checkPremium(flavour1);
+                    Flavour f1 = new Flavour(flavour1,premium1);
                     string flavour2 = cols[9];
+                    bool premium2 = checkPremium(flavour2);
+                    Flavour f2 = new Flavour(flavour2,premium2);
                     string flavour3 = cols[10];
-                    string topping1 = cols[11];
-                    string topping2 = cols[12];
-                    string topping3 = cols[13];
-                    string topping4 = cols[14];
+                    bool premium3 = checkPremium(flavour3);
+                    Flavour f3 = new Flavour(flavour3,premium3);
+                    List<Flavour> flavourlist = new List<Flavour> { f1, f2, f3 };
+                    Topping topping1 = new Topping(cols[11]);
+                    Topping topping2 = new Topping(cols[12]);
+                    Topping topping3 = new Topping(cols[13]);
+                    Topping topping4 = new Topping(cols[14]);
+                    List<Topping> toppinglist = new List<Topping> { topping1,topping2,topping3,topping4 };
+                    IceCream icecream = null;
+                    if (option == "Cup")
+                    {
+                        icecream = new Cup(option, scoops, flavourlist, toppinglist);
+                    }
+                    else if (option == "cone")
+                    {
+                        icecream = new Cone(option, scoops, flavourlist, toppinglist, dipped); 
+                    }
+                    else
+                    {
+                        icecream = new Waffle(option, scoops, flavourlist, toppinglist, waffleflavour);
+                    }
+                    Order order = new Order(id, timeReceived);
+                    orders.Add(order);
                     Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
-                    id, memberid, timeReceived, timefulfilled, option, scoops, dipped, waffleflavour, flavour1, flavour2, flavour3, topping1, topping2, topping3, topping4);
+                    id, memberid, timeReceived, timefulfilled, option, scoops, dipped, waffleflavour, flavour1, flavour2, flavour3, topping1.Type, topping2.Type, topping3.Type, topping4.Type);
                 }
                 Console.WriteLine();
             }
@@ -230,7 +265,7 @@ namespace S10258524_PRG2Assignment
                 for (int i = 0; i < orders.Count; i++)
                 {
                     Console.WriteLine(orders[i]);
-                    Console.WriteLine("finish");
+                   
                 }
             }
 
