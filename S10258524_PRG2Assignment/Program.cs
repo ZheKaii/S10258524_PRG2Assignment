@@ -32,13 +32,11 @@ namespace S10258524_PRG2Assignment
             }
 
             List<Customer> customers = new List<Customer>();
-            void Displayallcustomers()
+
+            void Readingcustomerscsv()
             {
-                // Basic Feature 1 - Heng Zhe Kai
                 string[] all_line = File.ReadAllLines("customers.csv");
                 string[] headers = all_line[0].Split(",");
-                Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}",
-                    headers[0], headers[1], headers[2], headers[3], headers[4], headers[5]);
 
                 for (int i = 1; i < all_line.Length; i++)
                 {
@@ -54,10 +52,18 @@ namespace S10258524_PRG2Assignment
                     customer.Rewards = pointCard;
                     customers.Add(customer);
                 }
+            }
+
+            Readingcustomerscsv();
+
+            void Option1(List<Customer> customers)
+            {
+                // Basic Feature 1 - Heng Zhe Kai
+                Console.WriteLine("Name       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
                 for (int i = 0; i < customers.Count; i++)
                 {
                     Customer c = customers[i];
-                    Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
+                    Console.WriteLine($"{c.Name,-11}{c.MemberId,-10}{c.Dob:dd/MM/yyyy}    {c.Rewards.Tier,-18}{c.Rewards.Points,-18}{c.Rewards.PunchCards,-11}");
                 }
                 Console.WriteLine();
             }
@@ -74,7 +80,7 @@ namespace S10258524_PRG2Assignment
 
 
             List<Order> orders = new List<Order>();
-            void Displayorders()
+            void Option2()
             {
                 // Basic Feature 2 - Gan Yu Hong
                 string[] all_line = File.ReadAllLines("orders.csv");
@@ -129,7 +135,7 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
-            void Registercustomer()
+            void Option3()
             {
                 // Basic Feature 3 - Heng Zhe Kai
                 Console.Write("Enter your name: ");
@@ -149,14 +155,10 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
-            void Createcustomerorder()
+            void Option4(List<Customer> customers)
             {
                 // Basic Feature 4 - Heng Zhe Kai
-                for (int i = 0; i < customers.Count; i++)
-                {
-                    Customer c = customers[i];
-                    Console.WriteLine("{0,-11}{1,-10}{2,-23}{3,-18}{4,-18}{5,-11}", c.Name, c.MemberId, c.Dob, c.Rewards.Tier, c.Rewards.Points, c.Rewards.PunchCards);
-                }
+                Option1(customers);
                 Customer? Search(List<Customer> customerslist, string orderingcustomer)
                 {
                     foreach (Customer customer in customerslist)
@@ -190,7 +192,7 @@ namespace S10258524_PRG2Assignment
                 }
             }
             // Basic Feature 5 - Gan Yu Hong
-            void Displayorderdetail()
+            void Option5()
             {
                 while (true)
                 {
@@ -260,7 +262,7 @@ namespace S10258524_PRG2Assignment
                 }  
             }
 
-            void orderlist()
+            void Orderlist()
             {
                 for (int i = 0; i < orders.Count; i++)
                 {
@@ -281,27 +283,27 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (option == 1)
                 {
-                    Displayallcustomers();
+                    Option1(customers);
                 }
                 else if (option == 2)
                 {
-                    Displayorders();
+                    Option2();
                 }
                 else if (option == 3)
                 {
-                    Registercustomer();
+                    Option3();
                 }
                 else if (option == 4)
                 {
-                    Createcustomerorder();
+                    Option4(customers);
                 }
                 else if (option == 5)
                 {
-                    Displayorderdetail();
+                    Option5();
                 }
                 else if (option == 6)
                 {
-                    orderlist();
+                    Orderlist();
                 }
                 else
                 {

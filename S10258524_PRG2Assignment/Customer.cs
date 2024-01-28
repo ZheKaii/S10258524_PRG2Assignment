@@ -34,10 +34,48 @@ namespace S10258524_PRG2Assignment
             Dob = dob;
         }
 
-        public Order MakeOrder()
+        public Order MakeOrder(IceCream iceCream)
         {
-            CurrentOrder = new Order();
-            return CurrentOrder;
+            Order newcustomerorder = new Order();
+            while (true)
+            {
+                Console.WriteLine("Ice Cream type 1, 2 and 3: Cup, Cone, Waffle");
+                Console.Write("Please choose a type of ice cream (enter the number): ");
+                int option = Convert.ToInt32(Console.ReadLine());
+
+                if (option == 1 && option == 2 && option == 3)
+                {
+                    if (option == 1)
+                    {
+                        Cup cup = new Cup();
+                        cup.Option = "cup";
+                        cup.Flavours = new List<Flavour>();
+                        cup.Toppings = new List<Topping>();
+                        Order order = new Order();
+                        CurrentOrder = order;
+                        while (true)
+                        {
+                            Console.Write("Enter number of scoops (1, 2, 3): ");
+                            int numberofscoops = Convert.ToInt32(Console.ReadLine());
+                            if (numberofscoops == 1 && numberofscoops == 2 && numberofscoops == 3)
+                            {
+                                iceCream.Scoops = numberofscoops;
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter a valid number (1, 2, 3).");
+                            }
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please enter a valid number (1, 2, 3).");
+                }
+            }
+
         }
         public bool IsBirthday()
         {
