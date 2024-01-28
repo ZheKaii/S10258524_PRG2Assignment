@@ -179,16 +179,18 @@ namespace S10258524_PRG2Assignment
                 }
                 else
                 {
-                    Console.Write("Enter your ice cream option: ");
-                    string option = Console.ReadLine();
-                    Console.WriteLine("Enter the number of scoops: ");
-                    int scoops = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("Enter your flavour(s): ");
-                    string type = Console.ReadLine();
-                    List<Flavour> flavours = new List<Flavour>();
-                    Console.WriteLine("Enter your topping(s): ");
-                    string topping = Console.ReadLine();
-                    List<Topping> toppings = new List<Topping>();
+                    foreach (Customer customer in customers)
+                    {
+                        if (customer.Name == orderingcustomer)
+                        {
+                            Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
+                            customer.MakeOrder();
+                            if (customer.Rewards.Tier == "Gold")
+                            {
+
+                            }
+                        }
+                    }
                 }
             }
             // Basic Feature 5 - Gan Yu Hong
