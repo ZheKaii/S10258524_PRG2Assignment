@@ -30,8 +30,12 @@ namespace S10258524_PRG2Assignment
                 int option = int.Parse(Console.ReadLine());
                 return option;
             }
-
+            //all our lists
             List<Customer> customers = new List<Customer>();
+            List<Order> orders = new List<Order>();
+            Queue<Order> ordersQueue = new Queue<Order>();
+            Queue<Order> goldenordersQueue = new Queue<Order>();
+
 
             void Readingcustomerscsv()
             {
@@ -78,8 +82,6 @@ namespace S10258524_PRG2Assignment
                 return false;
             }
 
-
-            List<Order> orders = new List<Order>();
             void Option2()
             {
                 // Basic Feature 2 - Gan Yu Hong
@@ -155,7 +157,7 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
-            void Option4(List<Customer> customers)
+            void Option4(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
             {
                 // Basic Feature 4 - Heng Zhe Kai
                 Option1(customers);
@@ -187,7 +189,13 @@ namespace S10258524_PRG2Assignment
                             customer.MakeOrder();
                             if (customer.Rewards.Tier == "Gold")
                             {
-
+                                goldenordersQueue.Enqueue(customer.CurrentOrder);
+                                Console.WriteLine("You made a successful order in the gold queue!!");
+                            }
+                            else
+                            {
+                                ordersQueue.Enqueue(customer.CurrentOrder);
+                                Console.WriteLine("You made a successful order in the normal queue!!");
                             }
                         }
                     }
@@ -297,7 +305,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (option == 4)
                 {
-                    Option4(customers);
+                    Option4(customers, goldenordersQueue, ordersQueue);
                 }
                 else if (option == 5)
                 {

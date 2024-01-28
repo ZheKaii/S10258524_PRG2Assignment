@@ -43,82 +43,79 @@ namespace S10258524_PRG2Assignment
                 Console.Write("Please choose a type of ice cream (enter the number): ");
                 int option = Convert.ToInt32(Console.ReadLine());
 
-                if (option == 1 && option == 2 && option == 3)
+                if (option == 1)
                 {
-                    if (option == 1)
+                    Cup cup = new Cup();
+                    cup.Option = "cup";
+                    cup.Flavours = new List<Flavour>();
+                    cup.Toppings = new List<Topping>();
+                    OrderIceCream(cup);
+                    CurrentOrder.IceCreamList.Add(cup);
+                    newcustomerorder.AddIceCream(cup);
+                    CurrentOrder.TimeReceived = DateTime.Now;
+                    break;
+                }
+                else if (option == 2)
+                {
+                    Cone cone = new Cone();
+                    cone.Flavours = new List<Flavour>();
+                    cone.Toppings = new List<Topping>();
+                    cone.Option = "cone";
+                    OrderIceCream(cone);
+                    Console.Write("Do you want the cone to be dipped? (y/n): ");
+                    string dippedcone = Console.ReadLine();
+                    if (dippedcone.ToLower() == "y")
                     {
-                        Cup cup = new Cup();
-                        cup.Option = "cup";
-                        cup.Flavours = new List<Flavour>();
-                        cup.Toppings = new List<Topping>();
-                        OrderIceCream(cup);
-                        CurrentOrder.IceCreamList.Add(cup);
-                        newcustomerorder.AddIceCream(cup);
-                        CurrentOrder.TimeReceived = DateTime.Now;
-                        break;
+                        cone.Dipped = true;
                     }
-                    else if (option == 2)
+                    else if (dippedcone.ToLower() == "n")
                     {
-                        Cone cone = new Cone();
-                        cone.Flavours = new List<Flavour>();
-                        cone.Toppings = new List<Topping>();
-                        cone.Option = "cone";
-                        OrderIceCream(cone);
-                        Console.Write("Do you want the cone to be dipped? (y/n): ");
-                        string dippedcone = Console.ReadLine();
-                        if (dippedcone.ToLower() == "y")
-                        {
-                            cone.Dipped = true;
-                        }
-                        else if (dippedcone.ToLower() == "n")
-                        {
-                            cone.Dipped = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Please enter a valid option (y/n).");
-                        }
-                        CurrentOrder.IceCreamList.Add(cone);
-                        newcustomerorder.AddIceCream(cone);
-                        CurrentOrder.TimeReceived = DateTime.Now;
-                        break;
+                        cone.Dipped = false;
                     }
                     else
                     {
-                        Waffle waffle = new Waffle();
-                        waffle.Option = "waffle";
-                        waffle.Flavours = new List<Flavour>();
-                        waffle.Toppings = new List<Topping>();
-                        OrderIceCream(waffle);
-                        Console.Write("Do you want a flavoured waffle (y/n): ");
-                        string waffleflavour = Console.ReadLine();
-                        if (waffleflavour.ToLower() == "y")
+                        Console.WriteLine("Please enter a valid option (y/n).");
+                    }
+                    CurrentOrder.IceCreamList.Add(cone);
+                    newcustomerorder.AddIceCream(cone);
+                    CurrentOrder.TimeReceived = DateTime.Now;
+                    break;
+                }
+                else if (option == 3)
+                {
+                    Waffle waffle = new Waffle();
+                    waffle.Option = "waffle";
+                    waffle.Flavours = new List<Flavour>();
+                    waffle.Toppings = new List<Topping>();
+                    OrderIceCream(waffle);
+                    Console.Write("Do you want a flavoured waffle (y/n): ");
+                    string waffleflavour = Console.ReadLine();
+                    if (waffleflavour.ToLower() == "y")
+                    {
+                        Console.Write("What flavour would you like (Pandan, Charcoal, Red Velvet): ");
+                        string wafflechoice = Console.ReadLine().ToLower();
+                        if (wafflechoice == "red velvet" || wafflechoice == "charcoal" || wafflechoice == "pandan")
                         {
-                            Console.Write("What flavour would you like (Pandan, Charcoal, Red Velvet): ");
-                            string wafflechoice = Console.ReadLine().ToLower();
-                            if (wafflechoice == "red velvet" || wafflechoice == "charcoal" || wafflechoice == "pandan")
-                            {
-                                waffle.WaffleFlavour = wafflechoice;
-                                CurrentOrder.IceCreamList.Add(waffle);
-                                newcustomerorder.AddIceCream(waffle);
-                                CurrentOrder.TimeReceived = DateTime.Now;
-                                break;
-                            }
-                        }
-                        else if (waffleflavour.ToLower() == "n")
-                        {
+                            waffle.WaffleFlavour = wafflechoice;
                             CurrentOrder.IceCreamList.Add(waffle);
                             newcustomerorder.AddIceCream(waffle);
                             CurrentOrder.TimeReceived = DateTime.Now;
                             break;
                         }
-                        else
-                        {
-                            Console.WriteLine("Please enter a valid choice (y/n).");
-                        }
+                    }
+                    else if (waffleflavour.ToLower() == "n")
+                    {
+                        CurrentOrder.IceCreamList.Add(waffle);
+                        newcustomerorder.AddIceCream(waffle);
+                        CurrentOrder.TimeReceived = DateTime.Now;
                         break;
                     }
-                }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid choice (y/n).");
+                    }
+                    break;
+                } 
                 else
                 {
                     Console.WriteLine("Please enter a valid number (1, 2, 3).");
@@ -134,7 +131,7 @@ namespace S10258524_PRG2Assignment
             {
                 Console.Write("Enter number of scoops (1, 2, 3): ");
                 int numberofscoops = Convert.ToInt32(Console.ReadLine());
-                if (numberofscoops == 1 && numberofscoops == 2 && numberofscoops == 3)
+                if (numberofscoops > 0 && numberofscoops < 4)
                 {
                     scoops = numberofscoops;
                     iceCream.Scoops = numberofscoops;
