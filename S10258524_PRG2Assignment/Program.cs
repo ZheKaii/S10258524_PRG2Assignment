@@ -312,7 +312,6 @@ namespace S10258524_PRG2Assignment
                 Console.Write("May I double check your name? : ");
                 string orderingcustomer = Console.ReadLine();
                 Customer foundcustomername = Search(customers, orderingcustomer);
-                payingcustomer = foundcustomername;
                 if (foundcustomername == null)
                 {
                     Console.WriteLine("Unable to find the customer name. Please try again.");
@@ -320,14 +319,20 @@ namespace S10258524_PRG2Assignment
                 else
                 {
                     PointCard pointCard = new PointCard(foundcustomername.Rewards.Points, foundcustomername.Rewards.PunchCards, foundcustomername.Rewards.Tier);
-                    payingcustomer.Rewards = pointCard;
                     foreach (IceCream iceCream in customerOrder.IceCreamList)
                     {
                         Console.WriteLine(iceCream.ToString());
                     }
                     double totalpayingprice = customerOrder.CalculateTotal();
                     Console.WriteLine($"Total: {totalpayingprice:F2}");
-                    Console.WriteLine("Your membership status: ", payingcustomer.Rewards.Tier);
+                    if (pointCard.Tier.ToLower() == "silver")
+                    {
+                        Console.WriteLine("Your membership status is silver.");
+                    }
+                    else if (pointCard.Tier.ToLower() == "gold")
+                    {
+                        Console.WriteLine("Your membership status is gold.");
+                    }
                     bool checkexpIcecream = true;
                     if (payingcustomer.IsBirthday() == true)
                     {

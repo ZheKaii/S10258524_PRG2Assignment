@@ -33,7 +33,7 @@ namespace S10258524_PRG2Assignment
         public abstract double CalculatePrice();
         public override string ToString()
         {
-            return "Option: " + Option + "\tScoops: " + Scoops + "\tFlavours: " + Flavours + "\tToppings: " + Toppings;
+            return $"Option: {Option}, Scoops: {Scoops}, Flavours: {string.Join(", ", Flavours.Select(flavor => flavor.Type))}, Toppings: {string.Join(", ", Toppings.Select(topping => topping.Type))}";
         }
     }
 }
