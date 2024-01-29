@@ -68,7 +68,8 @@ namespace S10258524_PRG2Assignment
                 }
             }
 
-            // Activating the method
+            // Activating the method for option 1 and 4 to use it
+
             Readingcustomerscsv();
 
             // Basic Feature 1 - Heng Zhe Kai
