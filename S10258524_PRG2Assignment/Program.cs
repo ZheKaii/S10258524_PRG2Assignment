@@ -26,6 +26,8 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine("[4] Create a customer's order");
                 Console.WriteLine("[5] Display order details of a customer");
                 Console.WriteLine("[6] Modify order details");
+                Console.WriteLine("[7] Process order and checkout");
+                Console.WriteLine("[8] Display monthly and total charge");
                 Console.WriteLine("[0] Exit");
                 Console.WriteLine("---------------------------------------------");
                 Console.Write("Enter your option: ");
@@ -170,6 +172,20 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
+            // Making a search method to search for the customer
+
+            Customer? Search(List<Customer> customerslist, string orderingcustomer)
+            {
+                foreach (Customer customer in customerslist)
+                {
+                    if (customer.Name == orderingcustomer)
+                    {
+                        return customer;
+                    }
+                }
+                return null;
+            }
+
             // Basic Feature 4 - Heng Zhe Kai
 
             void Option4(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
@@ -177,18 +193,7 @@ namespace S10258524_PRG2Assignment
                 // Making use of option 1 to print out the customers information
 
                 Option1(customers);
-                Customer? Search(List<Customer> customerslist, string orderingcustomer)
-                {
-                    foreach (Customer customer in customerslist)
-                    {
-                        if (customer.Name == orderingcustomer)
-                        {
-                            return customer;
-                        }
-                    }
-                    return null;
-                }
-                Console.WriteLine("Please select a customer from the list: ");
+                Console.Write("Please select a customer from the list: ");
                 string orderingcustomer = Console.ReadLine();
                 Customer foundcustomername = Search(customers, orderingcustomer);
                 if (foundcustomername == null)
@@ -229,17 +234,6 @@ namespace S10258524_PRG2Assignment
                         foreach (Customer customer in customers)
                         {
                             Console.WriteLine(customer.Name);
-                        }
-                        Customer? Search(List<Customer> customerslist, string customername)
-                        {
-                            foreach (Customer customer in customerslist)
-                            {
-                                if (customer.Name == customername)
-                                {
-                                    return customer;                                   
-                                }
-                            }
-                            return null;
                         }
                         Order SearchOrder(List<Order> orderslist, Customer customer)
                         {
@@ -290,7 +284,9 @@ namespace S10258524_PRG2Assignment
                 }  
             }
 
-            void Orderlist()
+            // Basic Feature 6 - Gan Yu Hong
+
+            void Option6()
             {
                 for (int i = 0; i < orders.Count; i++)
                 {
@@ -298,6 +294,112 @@ namespace S10258524_PRG2Assignment
                    
                 }
             }
+
+            // Advanced Feature (a) - Heng Zhe Kai
+
+            void Option7(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
+            {
+                Order customerOrder;
+                Customer payingcustomer = new Customer();
+                if (ordersQueue.Count != 0)
+                {
+                    customerOrder = ordersQueue.Dequeue();
+                }
+                else
+                {
+                    customerOrder = goldenordersQueue.Dequeue();
+                }
+                foreach (Customer customer in customers)
+                {
+                    int customerOrderId = customer.CurrentOrder.Id;
+                    if (customerOrderId == customerOrder.Id)
+                    {
+                        payingcustomer = customer;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry, you are the wrong customer.");
+                    }
+                }
+                PointCard pointCard = payingcustomer.Rewards;
+                foreach(IceCream iceCream in customerOrder.IceCreamList)
+                {
+                    Console.WriteLine(iceCream.ToString());
+                }
+                double totalpayingprice = customerOrder.CalculateTotal();
+                Console.WriteLine($"Total: {totalpayingprice:F2}");
+                Console.WriteLine($"Your membership status: {pointCard.Tier}");
+                bool checkexpIcecream = true;
+                if (payingcustomer.IsBirthday() == true)
+                {
+                    IceCream mostexpIcecream = customerOrder.IceCreamList[0];
+                    for (int i = 1; i < customerOrder.IceCreamList.Count; i++)
+                    {
+                        if (customerOrder.IceCreamList[i].CalculatePrice() > mostexpIcecream.CalculatePrice())
+                        {
+                            mostexpIcecream = customerOrder.IceCreamList[i];
+                            checkexpIcecream = false;
+                        }
+                    }
+                    totalpayingprice -= mostexpIcecream.CalculatePrice();
+                }
+                if (pointCard.PunchCards == 10)
+                {
+                    if (checkexpIcecream = true)
+                    {
+                        totalpayingprice -= customerOrder.IceCreamList[1].CalculatePrice();
+                    }
+                    else
+                    {
+                        totalpayingprice -= customerOrder.IceCreamList[0].CalculatePrice();
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < customerOrder.IceCreamList.Count; i++)
+                    {
+                        pointCard.Punch();
+                    }
+                }
+                if (pointCard.Tier.ToLower() == "silver" || pointCard.Tier.ToLower() == "gold")
+                {
+                    int redeempoints;
+                    while (true)
+                    {
+                        Console.Write("How many points would you like to redeem: ");
+                        int reductionpoints = Convert.ToInt32(Console.ReadLine());
+                        redeempoints = reductionpoints;
+                        if (reductionpoints == 0)
+                        {
+                            break;
+                        }
+                        else if (reductionpoints > pointCard.Points)
+                        {
+                            Console.WriteLine("You do not have enough points to redeem.");
+                            continue;
+                        }
+                        else if (reductionpoints < 0)
+                        {
+                            Console.WriteLine("Please enter a positive integer.");
+                            continue;
+                        }
+                        pointCard.RedeemPoints(redeempoints);
+                        totalpayingprice -= (redeempoints * 0.02);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Your membership status is Ordinary. You cannot redeem points yet.");
+                }
+                Console.WriteLine($"Total: {totalpayingprice:F2}");
+                Console.Write("Press anything to process the checkout: ");
+                Console.ReadLine();
+                pointCard.AddPoints((int)totalpayingprice);
+                customerOrder.TimeFulfilled = DateTime.Now;
+                payingcustomer.OrderHistory.Add(customerOrder);
+            }
+
+            // Making a loop for the menu and options until the user enters 0 to end the program
 
             while (true)
             {
@@ -331,7 +433,11 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (option == 6)
                 {
-                    Orderlist();
+                    Option6();
+                }
+                else if (option == 7)
+                {
+                    Option7(customers, goldenordersQueue, ordersQueue);
                 }
                 else
                 {

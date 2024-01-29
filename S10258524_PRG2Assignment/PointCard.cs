@@ -40,7 +40,6 @@ namespace S10258524_PRG2Assignment
         {
             if (Tier == "Silver" || Tier == "Gold")
             {
-                double discount = amount * 0.02;
                 Points -= amount;
             }
         }
