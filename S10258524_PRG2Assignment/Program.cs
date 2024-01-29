@@ -15,6 +15,8 @@ namespace S10258524_PRG2Assignment
     {
         static void Main(string[] args)
         {
+            // Making a menu for the program
+
             int DisplayMenu()
             {
                 Console.WriteLine("\n---------------- M E N U --------------------");
@@ -30,17 +32,22 @@ namespace S10258524_PRG2Assignment
                 int option = int.Parse(Console.ReadLine());
                 return option;
             }
-            //all our lists
+
+            // All our lists
             List<Customer> customers = new List<Customer>();
             List<Order> orders = new List<Order>();
             Queue<Order> ordersQueue = new Queue<Order>();
             Queue<Order> goldenordersQueue = new Queue<Order>();
 
+            // Making a method to be used for option 1 and 4
 
             void Readingcustomerscsv()
             {
+                // Reading the customers.csv file
+
                 string[] all_line = File.ReadAllLines("customers.csv");
-                string[] headers = all_line[0].Split(",");
+
+                // Assigning each column to a variable except for the headers and adding them to the customers list
 
                 for (int i = 1; i < all_line.Length; i++)
                 {
@@ -58,11 +65,13 @@ namespace S10258524_PRG2Assignment
                 }
             }
 
+            // Activating the method
             Readingcustomerscsv();
+
+            // Basic Feature 1 - Heng Zhe Kai
 
             void Option1(List<Customer> customers)
             {
-                // Basic Feature 1 - Heng Zhe Kai
                 Console.WriteLine("Name       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
                 for (int i = 0; i < customers.Count; i++)
                 {
@@ -71,6 +80,8 @@ namespace S10258524_PRG2Assignment
                 }
                 Console.WriteLine();
             }
+
+            // Method to check if the customer wants premium flavour for option 2
 
             bool checkPremium(string flavour)
             {
@@ -82,9 +93,10 @@ namespace S10258524_PRG2Assignment
                 return false;
             }
 
+            // Basic Feature 2 - Gan Yu Hong
+
             void Option2()
             {
-                // Basic Feature 2 - Gan Yu Hong
                 string[] all_line = File.ReadAllLines("orders.csv");
                 string[] headers = all_line[0].Split(",");
                 Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
@@ -137,9 +149,10 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
+            // Basic Feature 3 - Heng Zhe Kai
+
             void Option3()
             {
-                // Basic Feature 3 - Heng Zhe Kai
                 Console.Write("Enter your name: ");
                 string customername = Console.ReadLine();
                 Console.Write("Enter your ID number: ");
@@ -157,9 +170,12 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
+            // Basic Feature 4 - Heng Zhe Kai
+
             void Option4(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
             {
-                // Basic Feature 4 - Heng Zhe Kai
+                // Making use of option 1 to print out the customers information
+
                 Option1(customers);
                 Customer? Search(List<Customer> customerslist, string orderingcustomer)
                 {
@@ -201,7 +217,9 @@ namespace S10258524_PRG2Assignment
                     }
                 }
             }
+
             // Basic Feature 5 - Gan Yu Hong
+
             void Option5()
             {
                 while (true)
