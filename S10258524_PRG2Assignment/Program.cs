@@ -309,94 +309,94 @@ namespace S10258524_PRG2Assignment
                 {
                     customerOrder = goldenordersQueue.Dequeue();
                 }
-                foreach (Customer customer in customers)
+                Console.Write("May I double check your name? : ");
+                string orderingcustomer = Console.ReadLine();
+                Customer foundcustomername = Search(customers, orderingcustomer);
+                payingcustomer = foundcustomername;
+                if (foundcustomername == null)
                 {
-                    int customerOrderId = customer.CurrentOrder.Id;
-                    if (customerOrderId == customerOrder.Id)
-                    {
-                        payingcustomer = customer;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Sorry, you are the wrong customer.");
-                    }
-                }
-                PointCard pointCard = payingcustomer.Rewards;
-                foreach(IceCream iceCream in customerOrder.IceCreamList)
-                {
-                    Console.WriteLine(iceCream.ToString());
-                }
-                double totalpayingprice = customerOrder.CalculateTotal();
-                Console.WriteLine($"Total: {totalpayingprice:F2}");
-                Console.WriteLine($"Your membership status: {pointCard.Tier}");
-                bool checkexpIcecream = true;
-                if (payingcustomer.IsBirthday() == true)
-                {
-                    IceCream mostexpIcecream = customerOrder.IceCreamList[0];
-                    for (int i = 1; i < customerOrder.IceCreamList.Count; i++)
-                    {
-                        if (customerOrder.IceCreamList[i].CalculatePrice() > mostexpIcecream.CalculatePrice())
-                        {
-                            mostexpIcecream = customerOrder.IceCreamList[i];
-                            checkexpIcecream = false;
-                        }
-                    }
-                    totalpayingprice -= mostexpIcecream.CalculatePrice();
-                }
-                if (pointCard.PunchCards == 10)
-                {
-                    if (checkexpIcecream = true)
-                    {
-                        totalpayingprice -= customerOrder.IceCreamList[1].CalculatePrice();
-                    }
-                    else
-                    {
-                        totalpayingprice -= customerOrder.IceCreamList[0].CalculatePrice();
-                    }
+                    Console.WriteLine("Unable to find the customer name. Please try again.");
                 }
                 else
                 {
-                    for (int i = 0; i < customerOrder.IceCreamList.Count; i++)
+                    PointCard pointCard = new PointCard(foundcustomername.Rewards.Points, foundcustomername.Rewards.PunchCards, foundcustomername.Rewards.Tier);
+                    payingcustomer.Rewards = pointCard;
+                    foreach (IceCream iceCream in customerOrder.IceCreamList)
                     {
-                        pointCard.Punch();
+                        Console.WriteLine(iceCream.ToString());
                     }
-                }
-                if (pointCard.Tier.ToLower() == "silver" || pointCard.Tier.ToLower() == "gold")
-                {
-                    int redeempoints;
-                    while (true)
+                    double totalpayingprice = customerOrder.CalculateTotal();
+                    Console.WriteLine($"Total: {totalpayingprice:F2}");
+                    Console.WriteLine("Your membership status: ", payingcustomer.Rewards.Tier);
+                    bool checkexpIcecream = true;
+                    if (payingcustomer.IsBirthday() == true)
                     {
-                        Console.Write("How many points would you like to redeem: ");
-                        int reductionpoints = Convert.ToInt32(Console.ReadLine());
-                        redeempoints = reductionpoints;
-                        if (reductionpoints == 0)
+                        IceCream mostexpIcecream = customerOrder.IceCreamList[0];
+                        for (int i = 1; i < customerOrder.IceCreamList.Count; i++)
                         {
-                            break;
+                            if (customerOrder.IceCreamList[i].CalculatePrice() > mostexpIcecream.CalculatePrice())
+                            {
+                                mostexpIcecream = customerOrder.IceCreamList[i];
+                                checkexpIcecream = false;
+                            }
                         }
-                        else if (reductionpoints > pointCard.Points)
-                        {
-                            Console.WriteLine("You do not have enough points to redeem.");
-                            continue;
-                        }
-                        else if (reductionpoints < 0)
-                        {
-                            Console.WriteLine("Please enter a positive integer.");
-                            continue;
-                        }
-                        pointCard.RedeemPoints(redeempoints);
-                        totalpayingprice -= (redeempoints * 0.02);
+                        totalpayingprice -= mostexpIcecream.CalculatePrice();
                     }
+                    if (pointCard.PunchCards == 10)
+                    {
+                        if (checkexpIcecream = true)
+                        {
+                            totalpayingprice -= customerOrder.IceCreamList[1].CalculatePrice();
+                        }
+                        else
+                        {
+                            totalpayingprice -= customerOrder.IceCreamList[0].CalculatePrice();
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < customerOrder.IceCreamList.Count; i++)
+                        {
+                            pointCard.Punch();
+                        }
+                    }
+                    if (pointCard.Tier.ToLower() == "silver" || pointCard.Tier.ToLower() == "gold")
+                    {
+                        int redeempoints;
+                        while (true)
+                        {
+                            Console.Write("How many points would you like to redeem (0 to exit): ");
+                            int reductionpoints = Convert.ToInt32(Console.ReadLine());
+                            redeempoints = reductionpoints;
+                            if (reductionpoints == 0)
+                            {
+                                break;
+                            }
+                            else if (reductionpoints > pointCard.Points)
+                            {
+                                Console.WriteLine("You do not have enough points to redeem.");
+                                continue;
+                            }
+                            else if (reductionpoints < 0)
+                            {
+                                Console.WriteLine("Please enter a positive integer.");
+                                continue;
+                            }
+                            pointCard.RedeemPoints(redeempoints);
+                            totalpayingprice -= (redeempoints * 0.02);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Your membership status is Ordinary. You cannot redeem points yet.");
+                    }
+                    Console.WriteLine($"Total: {totalpayingprice:F2}");
+                    Console.Write("Press anything to process the checkout: ");
+                    Console.ReadLine();
+                    pointCard.AddPoints((int)totalpayingprice);
+                    customerOrder.TimeFulfilled = DateTime.Now;
+                    payingcustomer.OrderHistory.Add(customerOrder);
                 }
-                else
-                {
-                    Console.WriteLine("Your membership status is Ordinary. You cannot redeem points yet.");
-                }
-                Console.WriteLine($"Total: {totalpayingprice:F2}");
-                Console.Write("Press anything to process the checkout: ");
-                Console.ReadLine();
-                pointCard.AddPoints((int)totalpayingprice);
-                customerOrder.TimeFulfilled = DateTime.Now;
-                payingcustomer.OrderHistory.Add(customerOrder);
             }
 
             // Making a loop for the menu and options until the user enters 0 to end the program

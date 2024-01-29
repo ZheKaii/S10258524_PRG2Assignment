@@ -163,7 +163,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (choice == "n")
                 {
-                    Console.WriteLine("What normal flavour would you like (Vanilla, Strawberry, Chocolate): ");
+                    Console.Write("What normal flavour would you like (Vanilla, Strawberry, Chocolate): ");
                     string flavourchosen = Console.ReadLine().ToLower();
                     if (flavourchosen == "vanilla" || flavourchosen == "strawberry" || flavourchosen == "chocolate")
                     {
