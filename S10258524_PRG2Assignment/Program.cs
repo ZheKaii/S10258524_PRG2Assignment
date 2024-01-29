@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.IO.Pipes;
+using System.Text.RegularExpressions;
 
 //==========================================
 // Student Number : S10258441
@@ -67,14 +68,15 @@ namespace S10258524_PRG2Assignment
                 }
             }
 
-            // Activating the method
+            // Activating the method for option 1 and 4 to use it
+
             Readingcustomerscsv();
 
             // Basic Feature 1 - Heng Zhe Kai
 
             void Option1(List<Customer> customers)
             {
-                Console.WriteLine("Name       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
+                Console.WriteLine("\nName       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
                 for (int i = 0; i < customers.Count; i++)
                 {
                     Customer c = customers[i];
@@ -120,22 +122,81 @@ namespace S10258524_PRG2Assignment
                 }
             }
 
+            // Making a method to make sure the name is valid
+
+            bool ValidName(string name)
+            {
+                string pattern = @"^[a-zA-Z]+$";
+
+                return Regex.IsMatch(name, pattern);
+            }
+
+            // Making a method to make sure the id number is 6 digit
+
+            bool ValidNumericID(int id)
+            {
+                string stringid = id.ToString();
+
+                if (stringid.Length != 6)
+                {
+                    return false;
+                }
+                return true;
+            }
+
+            // Making a method to make sure the date of birth is not later than today
+
+            bool ValidDOB(DateTime Dob)
+            {
+                if (Dob >= DateTime.Today)
+                {
+                    return false;
+                }
+                return true;
+            }
+
             // Basic Feature 3 - Heng Zhe Kai
 
             void Option3()
             {
-                Console.Write("Enter your name: ");
-                string customername = Console.ReadLine();
-                Console.Write("Enter your ID number: ");
-                int customerid = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Enter your date of birth: ");
-                DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
-                Customer c1 = new Customer(customername, customerid, customerdob);
-                PointCard p1 = new PointCard(0, 0, "Ordinary");
-                c1.Rewards = p1;
-                using (StreamWriter sw = new StreamWriter("customers.csv", true))
+                while (true)
                 {
-                    sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
+                    Console.Write("Enter your name: ");
+                    string customername = Console.ReadLine();
+                    if (ValidName(customername))
+                    {
+                        Console.Write("Enter your ID number: ");
+                        int customerid = Convert.ToInt32(Console.ReadLine());
+                        if (ValidNumericID(customerid))
+                        {
+                            Console.Write("Enter your date of birth (dd/MM/yyyy): ");
+                            DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
+                            if (ValidDOB(customerdob))
+                            {
+                                Customer c1 = new Customer(customername, customerid, customerdob);
+                                PointCard p1 = new PointCard(0, 0, "Ordinary");
+                                c1.Rewards = p1;
+                                using (StreamWriter sw = new StreamWriter("customers.csv", true))
+                                {
+                                    sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter your real date of birth.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid 6 digits ID.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid name.");
+                    }
+                    
                 }
                 Console.WriteLine("You have successfully registered as a membership in our system!");
                 Console.WriteLine();
@@ -190,6 +251,7 @@ namespace S10258524_PRG2Assignment
                         }
                     }
                 }
+                Console.WriteLine();
             }
 
             // Basic Feature 5 - Gan Yu Hong
@@ -499,6 +561,7 @@ namespace S10258524_PRG2Assignment
                     customerOrder.TimeFulfilled = DateTime.Now;
                     payingcustomer.OrderHistory.Add(customerOrder);
                 }
+                Console.WriteLine();
             }
 
             // Making a loop for the menu and options until the user enters 0 to end the program
