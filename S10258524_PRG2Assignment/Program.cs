@@ -34,7 +34,7 @@ namespace S10258524_PRG2Assignment
                 int option = int.Parse(Console.ReadLine());
                 return option;
             }
-
+               
             // All our lists
             List<Customer> customers = new List<Customer>();
             List<Order> orders = new List<Order>();
@@ -83,7 +83,7 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
-            // Method to check if the customer wants premium flavour for option 2
+            // Method to check if the flavour is premium
 
             bool checkPremium(string flavour)
             {
@@ -99,56 +99,25 @@ namespace S10258524_PRG2Assignment
 
             void Option2()
             {
-                string[] all_line = File.ReadAllLines("orders.csv");
-                string[] headers = all_line[0].Split(",");
-                Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
-                    headers[0], headers[1], headers[2], headers[3], headers[4], headers[5], headers[6], headers[7],
-                    headers[8], headers[9], headers[10], headers[11], headers[12], headers[13], headers[14]);
-                for (int i = 1; i < all_line.Length; i++)
+                Console.WriteLine("Display all current orders");
+                Console.WriteLine("Gold Member Queue: ");
+                if (goldenordersQueue.Count == 0)
                 {
-                    string[] cols = all_line[i].Split(",");
-                    int id = int.Parse(cols[0]);
-                    int memberid = int.Parse(cols[1]);
-                    DateTime timeReceived = DateTime.ParseExact(cols[2], "dd/MM/yyyy HH:mm", null);
-                    DateTime? timefulfilled = DateTime.ParseExact(cols[3], "dd/MM/yyyy HH:mm", null);
-                    string option = cols[4];
-                    int scoops = int.Parse(cols[5]);
-                    bool dipped = bool.TryParse(cols[6],out dipped);
-                    string waffleflavour = cols[7];
-                    string flavour1 = cols[8];
-                    bool premium1 = checkPremium(flavour1);
-                    Flavour f1 = new Flavour(flavour1,premium1);
-                    string flavour2 = cols[9];
-                    bool premium2 = checkPremium(flavour2);
-                    Flavour f2 = new Flavour(flavour2,premium2);
-                    string flavour3 = cols[10];
-                    bool premium3 = checkPremium(flavour3);
-                    Flavour f3 = new Flavour(flavour3,premium3);
-                    List<Flavour> flavourlist = new List<Flavour> { f1, f2, f3 };
-                    Topping topping1 = new Topping(cols[11]);
-                    Topping topping2 = new Topping(cols[12]);
-                    Topping topping3 = new Topping(cols[13]);
-                    Topping topping4 = new Topping(cols[14]);
-                    List<Topping> toppinglist = new List<Topping> { topping1,topping2,topping3,topping4 };
-                    IceCream icecream = null;
-                    if (option == "Cup")
-                    {
-                        icecream = new Cup(option, scoops, flavourlist, toppinglist);
-                    }
-                    else if (option == "cone")
-                    {
-                        icecream = new Cone(option, scoops, flavourlist, toppinglist, dipped); 
-                    }
-                    else
-                    {
-                        icecream = new Waffle(option, scoops, flavourlist, toppinglist, waffleflavour);
-                    }
-                    Order order = new Order(id, timeReceived);
-                    orders.Add(order);
-                    Console.WriteLine("{0,-2} {1,-8} {2,-22} {3,-22} {4,-6} {5,-6} {6,-6} {7,-14} {8,-10} {9,-10} {10,-10} {11,-10} {12,-10} {13,-10} {14,-10}",
-                    id, memberid, timeReceived, timefulfilled, option, scoops, dipped, waffleflavour, flavour1, flavour2, flavour3, topping1.Type, topping2.Type, topping3.Type, topping4.Type);
+                    Console.WriteLine("Gold member queue is empty.");
                 }
-                Console.WriteLine();
+                else
+                {
+                    DisplayOrder(goldenordersQueue);
+                }
+                Console.WriteLine("Regular Member Queue:");
+                if (ordersQueue.Count == 0)
+                {
+                    Console.WriteLine("Regular member queue is empty.");
+                }
+                else
+                {
+                    DisplayOrder(ordersQueue);
+                }
             }
 
             // Basic Feature 3 - Heng Zhe Kai
@@ -225,57 +194,167 @@ namespace S10258524_PRG2Assignment
 
             // Basic Feature 5 - Gan Yu Hong
 
+            void ReadOrderFile()
+            {
+                string[] all_line = File.ReadAllLines("orders.csv");
+                string[] headers = all_line[0].Split(",");
+                
+                for (int i = 1; i < all_line.Length; i++)
+                {
+                    string[] cols = all_line[i].Split(",");
+                    int id = int.Parse(cols[0]);
+                    int memberid = int.Parse(cols[1]);
+                    DateTime timeReceived = DateTime.ParseExact(cols[2], "dd/MM/yyyy HH:mm", null);
+                    DateTime? timefulfilled = DateTime.ParseExact(cols[3], "dd/MM/yyyy HH:mm", null);
+                    string option = cols[4];
+                    int scoops = int.Parse(cols[5]);
+                    bool dipped = bool.TryParse(cols[6], out dipped);
+                    string waffleflavour = cols[7];
+                    string flavour1 = cols[8];
+                    bool premium1 = checkPremium(flavour1);
+                    Flavour f1 = new Flavour(flavour1, premium1);
+                    string flavour2 = cols[9];
+                    bool premium2 = checkPremium(flavour2);
+                    Flavour f2 = new Flavour(flavour2, premium2);
+                    string flavour3 = cols[10];
+                    bool premium3 = checkPremium(flavour3);
+                    Flavour f3 = new Flavour(flavour3, premium3);
+                    List<Flavour> flavourlist = new List<Flavour> { f1, f2, f3 };
+                    Topping topping1 = new Topping(cols[11]);
+                    Topping topping2 = new Topping(cols[12]);
+                    Topping topping3 = new Topping(cols[13]);
+                    Topping topping4 = new Topping(cols[14]);
+                    List<Topping> toppinglist = new List<Topping> { topping1, topping2, topping3, topping4 };
+                    IceCream icecream = null;
+                    if (option == "Cup")
+                    {
+                        icecream = new Cup(option, scoops, flavourlist, toppinglist);
+                    }
+                    else if (option == "cone")
+                    {
+                        icecream = new Cone(option, scoops, flavourlist, toppinglist, dipped);
+                    }
+                    else
+                    {
+                        icecream = new Waffle(option, scoops, flavourlist, toppinglist, waffleflavour);
+                    }
+                    Order order = new Order(id, timeReceived);
+                    order.IceCreamList.Add(icecream);
+                    order.TimeFulfilled = timeReceived;
+                    Customer? customer = customers.Find(c => c.MemberId == memberid);
+                    if (customer != null)
+                    {
+                        if (customer.OrderHistory == null)
+                        {
+                            customer.OrderHistory = new List<Order>();
+                        }
+                        customer.OrderHistory?.Add(order);
+                    }
+                 orders.Add(order);
+                    
+                }
+                Console.WriteLine();
+            }
+            ReadOrderFile();
+
+            void DisplayCollection<T>(IEnumerable<T> collection)
+            {
+                if (collection?.Any() == true)
+                {
+                    Console.WriteLine(string.Join(", ", collection));
+                }
+                else
+                {
+                    Console.WriteLine("");
+                }
+            }
+            void DisplayOrder(Queue<Order> orderQueue)
+            {
+                if (orderQueue.Count > 0)
+                {
+                    Console.WriteLine("");
+                    foreach (var order in orderQueue)
+                    {
+                        Console.WriteLine(order.ToString());
+                        foreach (var icecream in order.IceCreamList)
+                        {
+                            Console.WriteLine($"Option: {icecream.Option}, Scoops: {icecream.Scoops}");
+
+                            // Display Premium Flavours
+                            Console.Write("Premium Flavours: ");
+                            DisplayCollection(icecream.Flavours.Where(flavour => flavour.Premium));
+
+                            if (!icecream.Flavours.Any(flavour => flavour.Premium))
+                            {
+                                Console.Write("Flavours: ");
+                                DisplayCollection(icecream.Flavours);
+                            }
+
+                            // Display Toppings
+                            Console.Write("Toppings: ");
+                            DisplayCollection(icecream.Toppings);
+
+                            // Display Dipped status for Cone
+                            if (icecream is Cone cone)
+                            {
+                                Console.WriteLine($"Dipped: {cone.Dipped}");
+                            }
+
+                            if (icecream is Waffle waffle)
+                            {
+                                Console.WriteLine($"Waffle Flavour: {waffle.WaffleFlavour}");
+                            }
+                            Console.WriteLine();
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("NA");
+                }
+            }
+
             void Option5()
             {
                 while (true)
                 {
                     try
-                    {
+                    {   //print the customer name
                         foreach (Customer customer in customers)
                         {
                             Console.WriteLine(customer.Name);
                         }
-                        Order SearchOrder(List<Order> orderslist, Customer customer)
-                        {
-                            foreach (Order order in customer.OrderHistory)
-                            {
-                                foreach (Order order2 in orderslist)
-                                {
-                                    if (order.Id == order2.Id)
-                                    {
-                                        Console.WriteLine($"found!!!!");
-
-                                        return order2;
-                                    }
-                                }
-                            }
-                            return null;
-                        }
-
 
                         Console.Write("Please select a customer from the list: ");
                         string find = Console.ReadLine();
                         Customer foundcustomer = Search(customers, find);
+                        int memberid = foundcustomer.MemberId;
                         if (foundcustomer == null)
                         {
                             Console.WriteLine("Unable to find the customer name. Please try again.");
                         }
                         else
                         {
-                            int memberid = foundcustomer.MemberId;
-                            Order order = SearchOrder(orders, foundcustomer);
-                            if (order != null)
+                          
+                            if (foundcustomer.OrderHistory != null)
                             {
-                                Console.WriteLine("good");
+                                Console.WriteLine("Order Details (Past Orders):");
+                                DisplayOrder(new Queue<Order>(foundcustomer.OrderHistory));
                             }
-                            else 
-                            { 
-                                Console.WriteLine("bad"+memberid); 
-                            }
-                        }
 
-                        break;
+                            Console.WriteLine();
+                            Console.WriteLine("Order Details (Current Orders):");
+                            if (foundcustomer.Rewards.Tier == "Gold")
+                            {
+                                DisplayOrder(goldenordersQueue);
+                            }
+                            else if (foundcustomer.Rewards.Tier == "Ordinary")
+                            {
+                                DisplayOrder(ordersQueue);
+                            }
+                        }break;
                     }
+                    
                     catch (Exception)
                     {
                         Console.WriteLine("error");
@@ -288,11 +367,29 @@ namespace S10258524_PRG2Assignment
 
             void Option6()
             {
-                for (int i = 0; i < orders.Count; i++)
+                Option1(customers);
+                Console.Write("Please select a customer from the list: ");
+                string find = Console.ReadLine();
+                Customer foundcustomer = Search(customers, find);
+                Console.WriteLine("Order Details (Current Orders):");
+                if (foundcustomer.Rewards.Tier == "Gold")
                 {
-                    Console.WriteLine(orders[i]);
-                   
+                    DisplayOrder(goldenordersQueue);
                 }
+                else if (foundcustomer.Rewards.Tier == "Ordinary")
+                {
+                    DisplayOrder(ordersQueue);
+                }
+                Console.WriteLine("[1]Modify an existing Ice cream.");
+                Console.WriteLine("[2]Add an entirely new Ice cream object to the order.");
+                Console.WriteLine("[3]Delete an existing Ice cream from the order.");
+                Console.Write("What would you like to do? ");
+                int choice = int.Parse(Console.ReadLine());
+                if (choice ==1)
+                {
+
+                }
+
             }
 
             // Advanced Feature (a) - Heng Zhe Kai
@@ -443,6 +540,10 @@ namespace S10258524_PRG2Assignment
                 else if (option == 7)
                 {
                     Option7(customers, goldenordersQueue, ordersQueue);
+                }
+                else if (option == 10)
+                {
+                    
                 }
                 else
                 {

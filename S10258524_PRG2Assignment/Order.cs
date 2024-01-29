@@ -53,7 +53,14 @@ namespace S10258524_PRG2Assignment
         }
         public override string ToString()
         {
-            return "Id: " + Id + "  Time received: " + TimeReceived;
+            if (TimeFulfilled == null)
+            {
+                return $"id: {Id}, timeRecieved: {TimeReceived}, timeFulfilled: - ";
+            }
+            else
+            {
+                return $"id: {Id}, timeRecieved: {TimeReceived}, timeFulfilled: {TimeFulfilled}";
+            }
         }
     }
 }

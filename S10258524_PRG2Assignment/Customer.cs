@@ -32,6 +32,8 @@ namespace S10258524_PRG2Assignment
             Name = name;
             MemberId = memberId;
             Dob = dob;
+            Rewards = new PointCard();
+            CurrentOrder = new Order();
         }
 
         public void MakeOrder()

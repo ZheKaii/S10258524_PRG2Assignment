@@ -29,7 +29,7 @@ namespace S10258524_PRG2Assignment
         }
         public override string ToString()
         {
-            return base.ToString();
+            return Type;
         }
     }
 }
