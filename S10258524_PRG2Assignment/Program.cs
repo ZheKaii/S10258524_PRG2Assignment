@@ -376,6 +376,8 @@ namespace S10258524_PRG2Assignment
                 }
             }
 
+            // Basic Feature 5 - Gan Yu Hong
+
             void Option5()
             {
                 while (true)
