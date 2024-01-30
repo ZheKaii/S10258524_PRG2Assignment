@@ -267,12 +267,20 @@ namespace S10258524_PRG2Assignment
 
             void Option1(List<Customer> customers)
             {
+                // Printing out the headers 
+
                 Console.WriteLine("\nName       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
+                
+                // Printing out the information of all customers
+
                 for (int i = 0; i < customers.Count; i++)
                 {
                     Customer c = customers[i];
                     Console.WriteLine($"{c.Name,-11}{c.MemberId,-10}{c.Dob:dd/MM/yyyy}    {c.Rewards.Tier,-18}{c.Rewards.Points,-18}{c.Rewards.PunchCards,-11}");
                 }
+
+                // Adding a spacing between
+
                 Console.WriteLine();
             }
 
@@ -311,19 +319,31 @@ namespace S10258524_PRG2Assignment
                 {
                     Console.Write("\nEnter your name (capitalize the first letter): ");
                     string customername = Console.ReadLine();
+
+                    // Making sure the name is valid
+
                     if (ValidName(customername))
                     {
                         Console.Write("Enter your ID number: ");
                         int customerid = Convert.ToInt32(Console.ReadLine());
+
+                        // Making sure the ID number is valid
+
                         if (ValidNumericID(customerid))
                         {
                             Console.Write("Enter your date of birth (dd/MM/yyyy): ");
                             DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
+
+                            // Making sure the date of birth is valid
+
                             if (ValidDOB(customerdob))
                             {
                                 Customer c1 = new Customer(customername, customerid, customerdob);
                                 PointCard p1 = new PointCard(0, 0, "Ordinary");
                                 c1.Rewards = p1;
+
+                                // Appending the new customer information into the customers.csv
+
                                 using (StreamWriter sw = new StreamWriter("customers.csv", true))
                                 {
                                     sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
@@ -347,6 +367,9 @@ namespace S10258524_PRG2Assignment
                     
                 }
                 Console.WriteLine("\nYou have successfully registered as a membership in our system!");
+
+                // Adding a space between
+
                 Console.WriteLine();
             }
 
@@ -362,6 +385,8 @@ namespace S10258524_PRG2Assignment
 
                 while (true)
                 {
+                    // Finding the customer that is ordering
+
                     Console.Write("\nPlease select a customer from the list (capitalize the first letter): ");
                     string orderingcustomer = Console.ReadLine();
                     Customer foundcustomername = Search(customers, orderingcustomer);
@@ -393,6 +418,8 @@ namespace S10258524_PRG2Assignment
                     }
                     break;
                 }
+                // Adding a space between
+
                 Console.WriteLine();
             }
 
@@ -482,6 +509,9 @@ namespace S10258524_PRG2Assignment
             {
                 Order customerOrder;
                 Customer payingcustomer = new Customer();
+
+                // Checking which queue the customer is in and dequeue
+
                 if (ordersQueue.Count != 0)
                 {
                     customerOrder = ordersQueue.Dequeue();
@@ -490,6 +520,9 @@ namespace S10258524_PRG2Assignment
                 {
                     customerOrder = goldenordersQueue.Dequeue();
                 }
+
+                // Double check their name to find their information
+
                 Console.Write("\nMay I double check your name? (capitalize the first letter): ");
                 string orderingcustomer = Console.ReadLine();
                 Customer foundcustomername = Search(customers, orderingcustomer);
@@ -500,12 +533,21 @@ namespace S10258524_PRG2Assignment
                 else
                 {
                     PointCard pointCard = new PointCard(foundcustomername.Rewards.Points, foundcustomername.Rewards.PunchCards, foundcustomername.Rewards.Tier);
+                    
+                    //Printing the order of the customer
+
                     foreach (IceCream iceCream in customerOrder.IceCreamList)
                     {
                         Console.WriteLine(iceCream.ToString());
                     }
+
+                    // Calculate and display the total amount to pay before discount if there is
+
                     double totalpayingprice = customerOrder.CalculateTotal();
                     Console.WriteLine($"\nTotal: {totalpayingprice:F2}");
+
+                    // Display the customer's membership status 
+
                     if (pointCard.Tier.ToLower() == "silver")
                     {
                         Console.WriteLine("Your membership status is silver.");
@@ -514,7 +556,13 @@ namespace S10258524_PRG2Assignment
                     {
                         Console.WriteLine("Your membership status is gold.");
                     }
+
+                    // Checking if can redeem the most expensive ice cream for their birthday
+
                     bool checkexpIcecream = true;
+
+                    // Checking if it is their birthday
+
                     if (payingcustomer.IsBirthday() == true)
                     {
                         IceCream mostexpIcecream = customerOrder.IceCreamList[0];
@@ -528,6 +576,9 @@ namespace S10258524_PRG2Assignment
                         }
                         totalpayingprice -= mostexpIcecream.CalculatePrice();
                     }
+
+                    // Checking if they can redeem their punchcard for a free ice cream
+
                     if (pointCard.PunchCards == 10)
                     {
                         if (checkexpIcecream = true)
@@ -546,9 +597,15 @@ namespace S10258524_PRG2Assignment
                             pointCard.Punch();
                         }
                     }
+
+                    // Allowing the customer to redeem their points if their membership status is silver or gold
+
                     if (pointCard.Tier.ToLower() == "silver" || pointCard.Tier.ToLower() == "gold")
                     {
                         int redeempoints;
+
+                        //Making a loop for users to redeem their points
+
                         while (true)
                         {
                             Console.Write("\nHow many points would you like to redeem (0 to exit): ");
@@ -576,14 +633,22 @@ namespace S10258524_PRG2Assignment
                     {
                         Console.WriteLine("\nYour membership status is Ordinary. You cannot redeem points yet.");
                     }
+
+                    // Printing the total amount to pay after discount if there is any
+
                     Console.WriteLine($"\nTotal: {totalpayingprice:F2}");
                     Console.Write("Press anything to process the checkout: ");
+
+                    // Ensuring the user can press anything to continue the program
+
                     Console.ReadLine();
                     Console.WriteLine("\nYou have successfully checkout your order!!");
                     pointCard.AddPoints((int)totalpayingprice);
                     customerOrder.TimeFulfilled = DateTime.Now;
                     payingcustomer.OrderHistory.Add(customerOrder);
                 }
+                // Adding a space between
+
                 Console.WriteLine();
             }
 
