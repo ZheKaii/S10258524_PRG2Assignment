@@ -490,12 +490,12 @@ namespace S10258524_PRG2Assignment
                 {
                     customerOrder = goldenordersQueue.Dequeue();
                 }
-                Console.Write("May I double check your name? : ");
+                Console.Write("\nMay I double check your name? (capitalize the first letter): ");
                 string orderingcustomer = Console.ReadLine();
                 Customer foundcustomername = Search(customers, orderingcustomer);
                 if (foundcustomername == null)
                 {
-                    Console.WriteLine("Unable to find the customer name. Please try again.");
+                    Console.WriteLine("\nUnable to find the customer name. Please try again.");
                 }
                 else
                 {
@@ -505,7 +505,7 @@ namespace S10258524_PRG2Assignment
                         Console.WriteLine(iceCream.ToString());
                     }
                     double totalpayingprice = customerOrder.CalculateTotal();
-                    Console.WriteLine($"Total: {totalpayingprice:F2}");
+                    Console.WriteLine($"\nTotal: {totalpayingprice:F2}");
                     if (pointCard.Tier.ToLower() == "silver")
                     {
                         Console.WriteLine("Your membership status is silver.");
@@ -551,7 +551,7 @@ namespace S10258524_PRG2Assignment
                         int redeempoints;
                         while (true)
                         {
-                            Console.Write("How many points would you like to redeem (0 to exit): ");
+                            Console.Write("\nHow many points would you like to redeem (0 to exit): ");
                             int reductionpoints = Convert.ToInt32(Console.ReadLine());
                             redeempoints = reductionpoints;
                             if (reductionpoints == 0)
@@ -560,12 +560,12 @@ namespace S10258524_PRG2Assignment
                             }
                             else if (reductionpoints > pointCard.Points)
                             {
-                                Console.WriteLine("You do not have enough points to redeem.");
+                                Console.WriteLine("\nYou do not have enough points to redeem.");
                                 continue;
                             }
                             else if (reductionpoints < 0)
                             {
-                                Console.WriteLine("Please enter a positive integer.");
+                                Console.WriteLine("\nPlease enter a positive integer.");
                                 continue;
                             }
                             pointCard.RedeemPoints(redeempoints);
@@ -574,11 +574,12 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Your membership status is Ordinary. You cannot redeem points yet.");
+                        Console.WriteLine("\nYour membership status is Ordinary. You cannot redeem points yet.");
                     }
-                    Console.WriteLine($"Total: {totalpayingprice:F2}");
+                    Console.WriteLine($"\nTotal: {totalpayingprice:F2}");
                     Console.Write("Press anything to process the checkout: ");
                     Console.ReadLine();
+                    Console.WriteLine("\nYou have successfully checkout your order!!");
                     pointCard.AddPoints((int)totalpayingprice);
                     customerOrder.TimeFulfilled = DateTime.Now;
                     payingcustomer.OrderHistory.Add(customerOrder);
