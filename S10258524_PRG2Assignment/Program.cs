@@ -159,9 +159,11 @@ namespace S10258524_PRG2Assignment
 
             void Option3()
             {
+                // Enable a loop for the user in case there are exceptions to the inputs
+
                 while (true)
                 {
-                    Console.Write("Enter your name: ");
+                    Console.Write("\nEnter your name (capitalize the first letter): ");
                     string customername = Console.ReadLine();
                     if (ValidName(customername))
                     {
@@ -198,7 +200,7 @@ namespace S10258524_PRG2Assignment
                     }
                     
                 }
-                Console.WriteLine("You have successfully registered as a membership in our system!");
+                Console.WriteLine("\nYou have successfully registered as a membership in our system!");
                 Console.WriteLine();
             }
 
@@ -223,38 +225,44 @@ namespace S10258524_PRG2Assignment
                 // Making use of option 1 to print out the customers information
 
                 Option1(customers);
-                Console.Write("Please select a customer from the list: ");
-                string orderingcustomer = Console.ReadLine();
-                Customer foundcustomername = Search(customers, orderingcustomer);
-                if (foundcustomername == null)
+
+                // Enable a loop for the user in case there are exceptions to the inputs
+
+                while (true)
                 {
-                    Console.WriteLine("Unable to find the customer name. Please try again.");
-                }
-                else
-                {
-                    foreach (Customer customer in customers)
+                    Console.Write("\nPlease select a customer from the list (capitalize the first letter): ");
+                    string orderingcustomer = Console.ReadLine();
+                    Customer foundcustomername = Search(customers, orderingcustomer);
+                    if (foundcustomername == null)
                     {
-                        if (customer.Name == orderingcustomer)
+                        Console.WriteLine("\nUnable to find the customer name. Please try again.");
+                        continue;
+                    }
+                    else
+                    {
+                        foreach (Customer customer in customers)
                         {
-                            Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
-                            customer.MakeOrder();
-                            if (customer.Rewards.Tier == "Gold")
+                            if (customer.Name == orderingcustomer)
                             {
-                                goldenordersQueue.Enqueue(customer.CurrentOrder);
-                                Console.WriteLine("You made a successful order in the gold queue!!");
-                            }
-                            else
-                            {
-                                ordersQueue.Enqueue(customer.CurrentOrder);
-                                Console.WriteLine("You made a successful order in the normal queue!!");
+                                Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
+                                customer.MakeOrder();
+                                if (customer.Rewards.Tier == "Gold")
+                                {
+                                    goldenordersQueue.Enqueue(customer.CurrentOrder);
+                                    Console.WriteLine("You made a successful order in the gold queue!!");
+                                }
+                                else
+                                {
+                                    ordersQueue.Enqueue(customer.CurrentOrder);
+                                    Console.WriteLine("You made a successful order in the normal queue!!");
+                                }
                             }
                         }
                     }
+                    break;
                 }
                 Console.WriteLine();
             }
-
-            // Basic Feature 5 - Gan Yu Hong
 
             void ReadOrderFile()
             {
@@ -606,7 +614,7 @@ namespace S10258524_PRG2Assignment
                 {
                     Option7(customers, goldenordersQueue, ordersQueue);
                 }
-                else if (option == 10)
+                else if (option == 8)
                 {
                     
                 }
