@@ -42,6 +42,8 @@ namespace S10258524_PRG2Assignment
             Queue<Order> ordersQueue = new Queue<Order>();
             Queue<Order> goldenordersQueue = new Queue<Order>();
 
+            // All our extra methods 
+
             // Making a method to be used for option 1 and 4
 
             void Readingcustomerscsv()
@@ -72,54 +74,16 @@ namespace S10258524_PRG2Assignment
 
             Readingcustomerscsv();
 
-            // Basic Feature 1 - Heng Zhe Kai
-
-            void Option1(List<Customer> customers)
-            {
-                Console.WriteLine("\nName       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
-                for (int i = 0; i < customers.Count; i++)
-                {
-                    Customer c = customers[i];
-                    Console.WriteLine($"{c.Name,-11}{c.MemberId,-10}{c.Dob:dd/MM/yyyy}    {c.Rewards.Tier,-18}{c.Rewards.Points,-18}{c.Rewards.PunchCards,-11}");
-                }
-                Console.WriteLine();
-            }
-
             // Method to check if the flavour is premium
 
             bool checkPremium(string flavour)
             {
-                if (flavour == "Durian" || flavour == "Ube" || flavour ==" Sea Salt")
+                if (flavour == "Durian" || flavour == "Ube" || flavour == " Sea Salt")
                 {
-                    
+
                     return true;
                 }
                 return false;
-            }
-
-            // Basic Feature 2 - Gan Yu Hong
-
-            void Option2()
-            {
-                Console.WriteLine("Display all current orders");
-                Console.WriteLine("Gold Member Queue: ");
-                if (goldenordersQueue.Count == 0)
-                {
-                    Console.WriteLine("Gold member queue is empty.");
-                }
-                else
-                {
-                    DisplayOrder(goldenordersQueue);
-                }
-                Console.WriteLine("Regular Member Queue:");
-                if (ordersQueue.Count == 0)
-                {
-                    Console.WriteLine("Regular member queue is empty.");
-                }
-                else
-                {
-                    DisplayOrder(ordersQueue);
-                }
             }
 
             // Making a method to make sure the name is valid
@@ -155,55 +119,6 @@ namespace S10258524_PRG2Assignment
                 return true;
             }
 
-            // Basic Feature 3 - Heng Zhe Kai
-
-            void Option3()
-            {
-                // Enable a loop for the user in case there are exceptions to the inputs
-
-                while (true)
-                {
-                    Console.Write("\nEnter your name (capitalize the first letter): ");
-                    string customername = Console.ReadLine();
-                    if (ValidName(customername))
-                    {
-                        Console.Write("Enter your ID number: ");
-                        int customerid = Convert.ToInt32(Console.ReadLine());
-                        if (ValidNumericID(customerid))
-                        {
-                            Console.Write("Enter your date of birth (dd/MM/yyyy): ");
-                            DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
-                            if (ValidDOB(customerdob))
-                            {
-                                Customer c1 = new Customer(customername, customerid, customerdob);
-                                PointCard p1 = new PointCard(0, 0, "Ordinary");
-                                c1.Rewards = p1;
-                                using (StreamWriter sw = new StreamWriter("customers.csv", true))
-                                {
-                                    sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
-                                }
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Please enter your real date of birth.");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("Please enter a valid 6 digits ID.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please enter a valid name.");
-                    }
-                    
-                }
-                Console.WriteLine("\nYou have successfully registered as a membership in our system!");
-                Console.WriteLine();
-            }
-
             // Making a search method to search for the customer
 
             Customer? Search(List<Customer> customerslist, string orderingcustomer)
@@ -218,57 +133,13 @@ namespace S10258524_PRG2Assignment
                 return null;
             }
 
-            // Basic Feature 4 - Heng Zhe Kai
-
-            void Option4(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
-            {
-                // Making use of option 1 to print out the customers information
-
-                Option1(customers);
-
-                // Enable a loop for the user in case there are exceptions to the inputs
-
-                while (true)
-                {
-                    Console.Write("\nPlease select a customer from the list (capitalize the first letter): ");
-                    string orderingcustomer = Console.ReadLine();
-                    Customer foundcustomername = Search(customers, orderingcustomer);
-                    if (foundcustomername == null)
-                    {
-                        Console.WriteLine("\nUnable to find the customer name. Please try again.");
-                        continue;
-                    }
-                    else
-                    {
-                        foreach (Customer customer in customers)
-                        {
-                            if (customer.Name == orderingcustomer)
-                            {
-                                Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
-                                customer.MakeOrder();
-                                if (customer.Rewards.Tier == "Gold")
-                                {
-                                    goldenordersQueue.Enqueue(customer.CurrentOrder);
-                                    Console.WriteLine("You made a successful order in the gold queue!!");
-                                }
-                                else
-                                {
-                                    ordersQueue.Enqueue(customer.CurrentOrder);
-                                    Console.WriteLine("You made a successful order in the normal queue!!");
-                                }
-                            }
-                        }
-                    }
-                    break;
-                }
-                Console.WriteLine();
-            }
+            // Making a method to read the order.csv
 
             void ReadOrderFile()
             {
                 string[] all_line = File.ReadAllLines("orders.csv");
                 string[] headers = all_line[0].Split(",");
-                
+
                 for (int i = 1; i < all_line.Length; i++)
                 {
                     string[] cols = all_line[i].Split(",");
@@ -320,12 +191,17 @@ namespace S10258524_PRG2Assignment
                         }
                         customer.OrderHistory?.Add(order);
                     }
-                 orders.Add(order);
-                    
+                    orders.Add(order);
+
                 }
                 Console.WriteLine();
             }
+
+            // Activating the method for more than 1 options to do
+
             ReadOrderFile();
+
+            // Making a method to display the collection
 
             void DisplayCollection<T>(IEnumerable<T> collection)
             {
@@ -338,6 +214,9 @@ namespace S10258524_PRG2Assignment
                     Console.WriteLine("");
                 }
             }
+
+            // Making a method to display the orders in the queue
+
             void DisplayOrder(Queue<Order> orderQueue)
             {
                 if (orderQueue.Count > 0)
@@ -382,6 +261,139 @@ namespace S10258524_PRG2Assignment
                 {
                     Console.WriteLine("NA");
                 }
+            }
+
+            // Basic Feature 1 - Heng Zhe Kai
+
+            void Option1(List<Customer> customers)
+            {
+                Console.WriteLine("\nName       MemberId  DOB           MembershipStatus  MembershipPoints  PunchCard");
+                for (int i = 0; i < customers.Count; i++)
+                {
+                    Customer c = customers[i];
+                    Console.WriteLine($"{c.Name,-11}{c.MemberId,-10}{c.Dob:dd/MM/yyyy}    {c.Rewards.Tier,-18}{c.Rewards.Points,-18}{c.Rewards.PunchCards,-11}");
+                }
+                Console.WriteLine();
+            }
+
+            // Basic Feature 2 - Gan Yu Hong
+
+            void Option2()
+            {
+                Console.WriteLine("Display all current orders");
+                Console.WriteLine("Gold Member Queue: ");
+                if (goldenordersQueue.Count == 0)
+                {
+                    Console.WriteLine("Gold member queue is empty.");
+                }
+                else
+                {
+                    DisplayOrder(goldenordersQueue);
+                }
+                Console.WriteLine("Regular Member Queue:");
+                if (ordersQueue.Count == 0)
+                {
+                    Console.WriteLine("Regular member queue is empty.");
+                }
+                else
+                {
+                    DisplayOrder(ordersQueue);
+                }
+            }
+
+            // Basic Feature 3 - Heng Zhe Kai
+
+            void Option3()
+            {
+                // Enable a loop for the user in case there are exceptions to the inputs
+
+                while (true)
+                {
+                    Console.Write("\nEnter your name (capitalize the first letter): ");
+                    string customername = Console.ReadLine();
+                    if (ValidName(customername))
+                    {
+                        Console.Write("Enter your ID number: ");
+                        int customerid = Convert.ToInt32(Console.ReadLine());
+                        if (ValidNumericID(customerid))
+                        {
+                            Console.Write("Enter your date of birth (dd/MM/yyyy): ");
+                            DateTime customerdob = Convert.ToDateTime(Console.ReadLine());
+                            if (ValidDOB(customerdob))
+                            {
+                                Customer c1 = new Customer(customername, customerid, customerdob);
+                                PointCard p1 = new PointCard(0, 0, "Ordinary");
+                                c1.Rewards = p1;
+                                using (StreamWriter sw = new StreamWriter("customers.csv", true))
+                                {
+                                    sw.WriteLine($"{c1.Name},{c1.MemberId},{c1.Dob},{c1.Rewards.Tier},{c1.Rewards.Points},{c1.Rewards.PunchCards}");
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter your real date of birth.");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a valid 6 digits ID.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Please enter a valid name.");
+                    }
+                    
+                }
+                Console.WriteLine("\nYou have successfully registered as a membership in our system!");
+                Console.WriteLine();
+            }
+
+            // Basic Feature 4 - Heng Zhe Kai
+
+            void Option4(List<Customer> customers, Queue<Order> goldenordersQueue, Queue<Order> ordersQueue)
+            {
+                // Making use of option 1 to print out the customers information
+
+                Option1(customers);
+
+                // Enable a loop for the user in case there are exceptions to the inputs
+
+                while (true)
+                {
+                    Console.Write("\nPlease select a customer from the list (capitalize the first letter): ");
+                    string orderingcustomer = Console.ReadLine();
+                    Customer foundcustomername = Search(customers, orderingcustomer);
+                    if (foundcustomername == null)
+                    {
+                        Console.WriteLine("\nUnable to find the customer name. Please try again.");
+                        continue;
+                    }
+                    else
+                    {
+                        foreach (Customer customer in customers)
+                        {
+                            if (customer.Name == orderingcustomer)
+                            {
+                                Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
+                                customer.MakeOrder();
+                                if (customer.Rewards.Tier == "Gold")
+                                {
+                                    goldenordersQueue.Enqueue(customer.CurrentOrder);
+                                    Console.WriteLine("\nYou made a successful order in the gold queue!!");
+                                }
+                                else
+                                {
+                                    ordersQueue.Enqueue(customer.CurrentOrder);
+                                    Console.WriteLine("\nYou made a successful order in the normal queue!!");
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+                Console.WriteLine();
             }
 
             // Basic Feature 5 - Gan Yu Hong

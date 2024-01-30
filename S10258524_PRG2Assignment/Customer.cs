@@ -41,7 +41,7 @@ namespace S10258524_PRG2Assignment
             Order newcustomerorder = new Order();
             while (true)
             {
-                Console.WriteLine("Ice Cream type 1, 2 and 3: Cup, Cone, Waffle");
+                Console.WriteLine("\nIce Cream type 1, 2 and 3: Cup, Cone, Waffle");
                 Console.Write("Please choose a type of ice cream (enter the number): ");
                 int option = Convert.ToInt32(Console.ReadLine());
 
@@ -64,7 +64,7 @@ namespace S10258524_PRG2Assignment
                     cone.Toppings = new List<Topping>();
                     cone.Option = "cone";
                     OrderIceCream(cone);
-                    Console.Write("Do you want the cone to be dipped? (y/n): ");
+                    Console.Write("\nDo you want the cone to be dipped? (y/n): ");
                     string dippedcone = Console.ReadLine();
                     if (dippedcone.ToLower() == "y")
                     {
@@ -76,7 +76,7 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a valid option (y/n).");
+                        Console.WriteLine("\nPlease enter a valid option (y/n).");
                     }
                     CurrentOrder.IceCreamList.Add(cone);
                     newcustomerorder.AddIceCream(cone);
@@ -90,7 +90,7 @@ namespace S10258524_PRG2Assignment
                     waffle.Flavours = new List<Flavour>();
                     waffle.Toppings = new List<Topping>();
                     OrderIceCream(waffle);
-                    Console.Write("Do you want a flavoured waffle (y/n): ");
+                    Console.Write("\nDo you want a flavoured waffle (y/n): ");
                     string waffleflavour = Console.ReadLine();
                     if (waffleflavour.ToLower() == "y")
                     {
@@ -114,13 +114,13 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a valid choice (y/n).");
+                        Console.WriteLine("\nPlease enter a valid choice (y/n).");
                     }
                     break;
                 } 
                 else
                 {
-                    Console.WriteLine("Please enter a valid number (1, 2, 3).");
+                    Console.WriteLine("\nPlease enter a valid number (1, 2, 3).");
                 }
             }
         }
@@ -131,7 +131,7 @@ namespace S10258524_PRG2Assignment
             int scoops;
             while (true)
             {
-                Console.Write("Enter number of scoops (1, 2, 3): ");
+                Console.Write("\nEnter number of scoops (1, 2, 3): ");
                 int numberofscoops = Convert.ToInt32(Console.ReadLine());
                 if (numberofscoops > 0 && numberofscoops < 4)
                 {
@@ -141,7 +141,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid number (1, 2, 3).");
+                    Console.WriteLine("\nPlease enter a valid number (1, 2, 3).");
                 }
             }
             for (int i = 0; i < scoops; i++)
@@ -165,7 +165,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (choice == "n")
                 {
-                    Console.Write("What normal flavour would you like (Vanilla, Strawberry, Chocolate): ");
+                    Console.Write("\nWhat normal flavour would you like (Vanilla, Strawberry, Chocolate): ");
                     string flavourchosen = Console.ReadLine().ToLower();
                     if (flavourchosen == "vanilla" || flavourchosen == "strawberry" || flavourchosen == "chocolate")
                     {
@@ -174,24 +174,24 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a valid normal flavour.");
+                        Console.WriteLine("\nPlease enter a valid normal flavour.");
                         i--;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Please enter a valid input (y/n): ");
+                    Console.WriteLine("\nPlease enter a valid input (y/n): ");
                     i--;
                 }
             }
-            Console.Write("Would you like to have any toppings (y/n): ");
+            Console.Write("\nWould you like to have any toppings (y/n): ");
             string choice2 = Console.ReadLine().ToLower();
             if (choice2 == "y")
             {
                 int toppings;
                 while (true)
                 {
-                    Console.Write("Enter the number of toppings you want: ");
+                    Console.Write("\nEnter the number of toppings you want: ");
                     int numberoftoppings = Convert.ToInt32(Console.ReadLine());
                     if (numberoftoppings > 0 && numberoftoppings < 5)
                     {
@@ -200,7 +200,7 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Please enter a valid integer (1, 2, 3, 4): ");
+                        Console.WriteLine("\nPlease enter a valid integer (1, 2, 3, 4): ");
                     }
                 }
                 for (int i = 0; i < toppings; i++)
@@ -216,18 +216,18 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Please choose a valid topping.");
+                        Console.WriteLine("\nPlease choose a valid topping.");
                         i--;
                     }
                 }
             }
             else if (choice2 == "n")
             {
-                Console.WriteLine("No toppings added for you.");
+                Console.WriteLine("\nNo toppings added for you.");
             }
             else
             {
-                Console.WriteLine("Please enter a valid choice (y/n): ");
+                Console.WriteLine("\nPlease enter a valid choice (y/n): ");
             }
         }
         public bool IsBirthday()
