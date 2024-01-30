@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Text.RegularExpressions;
+using System.Reflection.Metadata.Ecma335;
 
 //==========================================
 // Student Number : S10258441
@@ -238,7 +239,7 @@ namespace S10258524_PRG2Assignment
                         Console.WriteLine(order.ToString());
                         foreach (var icecream in order.IceCreamList)
                         {
-                            Console.WriteLine($"Option: {icecream.Option}   Scoops: {icecream.Scoops}");
+                            Console.WriteLine($"Option: {icecream.Option}\nScoops: {icecream.Scoops}");
 
                             // Display Premium Flavours
                             Console.Write("Premium Flavours: ");
@@ -439,12 +440,9 @@ namespace S10258524_PRG2Assignment
                 {
                     try
                     {   //print the customer name
-                        foreach (Customer customer in customers)
-                        {
-                            Console.WriteLine(customer.Name);
-                        }
+                        Option1(customers);
 
-                        Console.Write("Please select a customer from the list: ");
+                        Console.Write("Please select a customer from the list (capitalize the first letter): ");
                         string find = Console.ReadLine();
                         Customer foundcustomer = Search(customers, find);
                         int memberid = foundcustomer.MemberId;
@@ -488,59 +486,75 @@ namespace S10258524_PRG2Assignment
             void Option6()
             {
                 Option1(customers);
-                Console.Write("Please select a customer from the list: ");
+                Console.Write("Please select a customer from the list (capitalize the first letter): ");
                 string find = Console.ReadLine();
                 Customer foundcustomer = Search(customers, find);
-                Console.WriteLine("Order Details (Current Orders):");
-                if (foundcustomer.Rewards.Tier == "Gold")
+                if (foundcustomer == null)
                 {
-                    DisplayOrder(goldenordersQueue);
-                }
-                else if (foundcustomer.Rewards.Tier == "Ordinary")
-                {
-                    DisplayOrder(ordersQueue);
-                }
-                Console.WriteLine("[1]Modify an existing Ice cream.");
-                Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
-                Console.WriteLine("[3]Delete an existing Ice cream from the order.");
-                Console.Write("What would you like to do? ");
-                int choice = int.Parse(Console.ReadLine());
-                if (choice ==1)
-                {
-                    if (foundcustomer.CurrentOrder == null)
-                    {
-                        Console.WriteLine("No Ice Cream to modify.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter ice cream to modify");
-                        int id = int.Parse(Console.ReadLine());
-                        foundcustomer.CurrentOrder.ModifyIceCream(id);
-                    }
-                }
-                else if (choice ==2) 
-                {
-                    foundcustomer.MakeOrder();
-                    
-                }
-                else if (choice ==3)
-                {
-                    if (foundcustomer.CurrentOrder == null) 
-                    {
-                        Console.WriteLine("No Ice Cream to delete.");
-                    }
-                    else
-                    {
-                        Console.Write("Enter order ID: ");
-                        int deleteid = int.Parse(Console.ReadLine());
-                        foundcustomer.CurrentOrder.DeleteIceCream(deleteid);
-                    }   
+                    Console.WriteLine("Customer not found");
                 }
                 else
                 {
-                    Console.WriteLine("Invalid Input.");
-                }
+                    Console.WriteLine("Order Details (Current Orders):");
+                    if (foundcustomer.Rewards.Tier == "Gold")
+                    {
+                        DisplayOrder(goldenordersQueue);
+                    }
+                    else if (foundcustomer.Rewards.Tier == "Ordinary")
+                    {
+                        DisplayOrder(ordersQueue);
+                    }
 
+                    Console.WriteLine("[1]Modify an existing Ice cream.");
+                    Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
+                    Console.WriteLine("[3]Delete an existing Ice cream from the order.");
+                    Console.Write("What would you like to do: ");
+                    int choice = int.Parse(Console.ReadLine());
+                    if (choice == 1)
+                    {
+                        if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
+                        {
+                            Console.WriteLine("No Ice Cream to modify.");
+                        }
+                        else
+                        {
+                            Console.Write("\nEnter ice cream to modify: ");
+                            int id = int.Parse(Console.ReadLine());
+                            foundcustomer.CurrentOrder.ModifyIceCream(id);
+                        }
+                    }
+                    else if (choice == 2)
+                    {
+                        foundcustomer.MakeOrder();
+                        if (foundcustomer.Rewards.Tier == "Gold")
+                        {
+                            goldenordersQueue.Enqueue(foundcustomer.CurrentOrder);
+                            Console.WriteLine("\nYou made a successful order in the gold queue!!");
+                        }
+                        else
+                        {
+                            ordersQueue.Enqueue(foundcustomer.CurrentOrder);
+                            Console.WriteLine("\nYou made a successful order in the normal queue!!");
+                        }
+                    }
+                    else if (choice == 3)
+                    {
+                        if (foundcustomer.CurrentOrder == null)
+                        {
+                            Console.WriteLine("No Ice Cream to delete.");
+                        }
+                        else
+                        {
+                            Console.Write("Enter order ID: ");
+                            int deleteid = int.Parse(Console.ReadLine());
+                            foundcustomer.CurrentOrder.DeleteIceCream(deleteid);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid Input.");
+                    }
+                }             
             }
 
             // Advanced Feature (a) - Heng Zhe Kai

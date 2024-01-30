@@ -55,7 +55,7 @@ namespace S10258524_PRG2Assignment
         }
         public override string ToString()
         {
-            return base.ToString();
+            return $"Option: {Option} | Scoops: {Scoops} | Flavours: {string.Join(", ", Flavours.Select(flavor => flavor.Type))} | Toppings: {string.Join(", ", Toppings.Select(topping => topping.Type))} | Dipped: {Dipped}";
         }
     }
 }
