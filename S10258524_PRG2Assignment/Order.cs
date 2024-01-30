@@ -237,9 +237,11 @@ namespace S10258524_PRG2Assignment
         }
         public void DeleteIceCream(int index)
         {
+            
             if (index < IceCreamList.Count && index >= 0)
             {
                 IceCreamList.RemoveAt(index);
+                
             }
             else
             {

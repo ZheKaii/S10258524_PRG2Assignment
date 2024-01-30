@@ -233,7 +233,7 @@ namespace S10258524_PRG2Assignment
             {
                 if (orderQueue.Count > 0)
                 {
-                    Console.WriteLine("");
+                    Console.WriteLine();
                     foreach (var order in orderQueue)
                     {
                         Console.WriteLine(order.ToString());
@@ -244,8 +244,8 @@ namespace S10258524_PRG2Assignment
                             // Display Premium Flavours
                             Console.Write("Premium Flavours: ");
                             DisplayCollection(icecream.Flavours.Where(flavour => flavour.Premium));
-
-                            Console.Write("Flavours: ");
+                            // Display regular Flavours
+                            Console.Write("Regular Flavours: ");
                             DisplayCollection(icecream.Flavours.Where(flavour => !flavour.Premium));
 
                             // Display Toppings
@@ -269,6 +269,29 @@ namespace S10258524_PRG2Assignment
                 else
                 {
                     Console.WriteLine("NA");
+                }
+            }
+            void removeQueue(Queue<Order> queue, int index)
+            {
+                Queue<Order> tempQueue = new Queue<Order>();
+                for (int i = 0; i < index && queue.Count > 0; i++)
+                {
+                    tempQueue.Enqueue(queue.Dequeue());
+                }
+                if (queue.Count > 0)
+                {
+                    Order removedOrder = queue.Dequeue();
+                    Console.WriteLine("\nIce cream is removed.");
+                }
+                else
+                {
+                    Console.WriteLine("No Order at Index " + index+1);
+                }
+
+                // Enqueue back the orders before the target index
+                while (tempQueue.Count > 0)
+                {
+                    queue.Enqueue(tempQueue.Dequeue());
                 }
             }
 
@@ -539,15 +562,28 @@ namespace S10258524_PRG2Assignment
                     }
                     else if (choice == 3)
                     {
-                        if (foundcustomer.CurrentOrder == null)
+                        if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
                         {
                             Console.WriteLine("No Ice Cream to delete.");
                         }
                         else
                         {
-                            Console.Write("Enter order ID: ");
-                            int deleteid = int.Parse(Console.ReadLine());
-                            foundcustomer.CurrentOrder.DeleteIceCream(deleteid);
+                            Console.Write("Enter order Index: ");
+                            int deleteindex = int.Parse(Console.ReadLine())-1;
+                            //foundcustomer.CurrentOrder.DeleteIceCream(deleteindex);
+                            if (foundcustomer.Rewards.Tier == "Gold")
+                            {
+                                removeQueue(goldenordersQueue, deleteindex);
+                                Console.WriteLine("\nReaming Ice cream: ");
+                                DisplayOrder(goldenordersQueue);
+                                
+                            }
+                            else
+                            {
+                                removeQueue(ordersQueue, deleteindex);
+                                Console.WriteLine("\nReaming Ice cream: ");
+                                DisplayOrder(ordersQueue);
+                            }
                         }
                     }
                     else
