@@ -20,20 +20,31 @@ namespace S10258524_PRG2Assignment
 
             int DisplayMenu()
             {
-                Console.WriteLine("\n---------------- M E N U --------------------");
-                Console.WriteLine("[1] List information of all the customers");
-                Console.WriteLine("[2] List information of all current orders");
-                Console.WriteLine("[3] Register a new customer");
-                Console.WriteLine("[4] Create a customer's order");
-                Console.WriteLine("[5] Display order details of a customer");
-                Console.WriteLine("[6] Modify order details");
-                Console.WriteLine("[7] Process order and checkout");
-                Console.WriteLine("[8] Display monthly and total charge");
-                Console.WriteLine("[0] Exit");
-                Console.WriteLine("---------------------------------------------");
-                Console.Write("Enter your option: ");
-                int option = int.Parse(Console.ReadLine());
-                return option;
+                while (true)
+                {
+                    try
+                    {
+                        Console.WriteLine("\n---------------- M E N U --------------------");
+                        Console.WriteLine("[1] List information of all the customers");
+                        Console.WriteLine("[2] List information of all current orders");
+                        Console.WriteLine("[3] Register a new customer");
+                        Console.WriteLine("[4] Create a customer's order");
+                        Console.WriteLine("[5] Display order details of a customer");
+                        Console.WriteLine("[6] Modify order details");
+                        Console.WriteLine("[7] Process order and checkout");
+                        Console.WriteLine("[8] Display monthly and total charge");
+                        Console.WriteLine("[0] Exit");
+                        Console.WriteLine("---------------------------------------------");
+                        Console.Write("Enter your option: ");
+                        int option = int.Parse(Console.ReadLine());
+                        return option;
+                        
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Please enter a number from 0-8");                    
+                    }
+                }
             }
                
             // All our lists
@@ -227,17 +238,14 @@ namespace S10258524_PRG2Assignment
                         Console.WriteLine(order.ToString());
                         foreach (var icecream in order.IceCreamList)
                         {
-                            Console.WriteLine($"Option: {icecream.Option}, Scoops: {icecream.Scoops}");
+                            Console.WriteLine($"Option: {icecream.Option}   Scoops: {icecream.Scoops}");
 
                             // Display Premium Flavours
                             Console.Write("Premium Flavours: ");
                             DisplayCollection(icecream.Flavours.Where(flavour => flavour.Premium));
 
-                            if (!icecream.Flavours.Any(flavour => flavour.Premium))
-                            {
-                                Console.Write("Flavours: ");
-                                DisplayCollection(icecream.Flavours);
-                            }
+                            Console.Write("Flavours: ");
+                            DisplayCollection(icecream.Flavours.Where(flavour => !flavour.Premium));
 
                             // Display Toppings
                             Console.Write("Toppings: ");
@@ -288,7 +296,7 @@ namespace S10258524_PRG2Assignment
 
             void Option2()
             {
-                Console.WriteLine("Display all current orders");
+                Console.WriteLine("Display all current orders\n");
                 Console.WriteLine("Gold Member Queue: ");
                 if (goldenordersQueue.Count == 0)
                 {
@@ -463,7 +471,8 @@ namespace S10258524_PRG2Assignment
                             {
                                 DisplayOrder(ordersQueue);
                             }
-                        }break;
+                        }
+                        break;
                     }
                     
                     catch (Exception)
@@ -492,13 +501,44 @@ namespace S10258524_PRG2Assignment
                     DisplayOrder(ordersQueue);
                 }
                 Console.WriteLine("[1]Modify an existing Ice cream.");
-                Console.WriteLine("[2]Add an entirely new Ice cream object to the order.");
+                Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
                 Console.WriteLine("[3]Delete an existing Ice cream from the order.");
                 Console.Write("What would you like to do? ");
                 int choice = int.Parse(Console.ReadLine());
                 if (choice ==1)
                 {
-
+                    if (foundcustomer.CurrentOrder == null)
+                    {
+                        Console.WriteLine("No Ice Cream to modify.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Enter ice cream to modify");
+                        int id = int.Parse(Console.ReadLine());
+                        foundcustomer.CurrentOrder.ModifyIceCream(id);
+                    }
+                }
+                else if (choice ==2) 
+                {
+                    foundcustomer.MakeOrder();
+                    
+                }
+                else if (choice ==3)
+                {
+                    if (foundcustomer.CurrentOrder == null) 
+                    {
+                        Console.WriteLine("No Ice Cream to delete.");
+                    }
+                    else
+                    {
+                        Console.Write("Enter order ID: ");
+                        int deleteid = int.Parse(Console.ReadLine());
+                        foundcustomer.CurrentOrder.DeleteIceCream(deleteid);
+                    }   
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Input.");
                 }
 
             }
