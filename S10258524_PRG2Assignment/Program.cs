@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Text.RegularExpressions;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Principal;
+using System.Collections;
 
 //==========================================
 // Student Number : S10258441
@@ -742,6 +744,56 @@ namespace S10258524_PRG2Assignment
                 Console.WriteLine();
             }
 
+            //Advanced feature b (Gan Yu Hong)
+            void option8(List<Order> orederlist)
+            {
+                Console.WriteLine("\nDisplay monthly charged amounts breakdown & total charged amounts for the year.\n");
+                //prompt for year and store in var year
+                Console.Write("Enter the year: ");
+                int year = int.Parse(Console.ReadLine());
+
+                List<Order> yearList = new List<Order>();
+                Dictionary<int, double> monthlyamt = new Dictionary<int, double>();
+                double total =0;
+
+                foreach (Order order in orederlist) 
+                { 
+                    if (order.TimeFulfilled.Value.Year == year)
+                    {
+                        yearList.Add(order);
+                    }
+                }
+
+                for (int key = 1; key <= 12; key++)
+                {
+                    // Initialize each value to 0
+                    monthlyamt[key] = 0.0;
+                }
+
+                Console.WriteLine();
+
+                foreach (Order order in yearList)
+                {
+                    int month = order.TimeFulfilled.Value.Month;
+                    double amt = 0.0;
+                    amt = order.CalculateTotal();
+
+                    monthlyamt[month] += amt;
+
+
+                    total += amt;
+                }
+                string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+                for (int i = 0; i < months.Length; i++)
+                {
+                    Console.WriteLine($"{months[i]} {year}:\t${monthlyamt[i+1]:F2}");
+                }
+                Console.WriteLine($"\nTotal: ${total:F2}");
+
+            }
+
+
             // Making a loop for the menu and options until the user enters 0 to end the program
 
             while (true)
@@ -784,7 +836,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else if (option == 8)
                 {
-                    
+                    option8(orders);
                 }
                 else
                 {
