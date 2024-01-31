@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using static System.Formats.Asn1.AsnWriter;
 
 //==========================================
-// Student Number : S10258441
-// Student Name : Gan Yu Hong
-// Partner Name : Heng Zhe Kai
+// Student Number : S10258524
+// Student Name : Heng Zhe Kai
+// Partner Name : Gan Yu Hong
 //==========================================
 
 namespace S10258524_PRG2Assignment
