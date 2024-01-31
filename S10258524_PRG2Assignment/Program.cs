@@ -497,20 +497,24 @@ namespace S10258524_PRG2Assignment
                             Console.WriteLine("Order Details (Past Orders):");
                             DisplayOrder(new Queue<Order>(foundcustomer.OrderHistory));
                         }
+                        // Display Current order
+                        Console.WriteLine("\nOrder Details (Current Orders):");
+                        if (foundcustomer.CurrentOrder.IceCreamList.Any())
+                        {
+                            foreach (IceCream i in foundcustomer.CurrentOrder.IceCreamList)
+                            {
+                                Console.WriteLine(foundcustomer.CurrentOrder);
+                                Console.WriteLine(i);
+                            }
 
-                        Console.WriteLine();
-                        Console.WriteLine("Order Details (Current Orders):");
-                        if (foundcustomer.Rewards.Tier == "Gold")
-                        {
-                            // Display gold member queue
-                            DisplayOrder(goldenordersQueue);
+                            break;
                         }
-                        else if (foundcustomer.Rewards.Tier == "Ordinary")
+                        else
                         {
-                            // Display regular member queue
-                            DisplayOrder(ordersQueue);
+                            Console.WriteLine("NA");
+                            break;
                         }
-                        break;
+                        
                     }
 
                 }  
@@ -535,20 +539,25 @@ namespace S10258524_PRG2Assignment
                     }
                     else
                     {
-                        Console.WriteLine("Order Details (Current Orders):");
-                        if (foundcustomer.Rewards.Tier == "Gold")
+                        // Display Current order
+                        Console.WriteLine("\nOrder Details (Current Orders):");
+                        if (foundcustomer.CurrentOrder.IceCreamList.Any())
                         {
-                            // Display gold member queue
-                            DisplayOrder(goldenordersQueue);
+                            foreach (IceCream i in foundcustomer.CurrentOrder.IceCreamList)
+                            {
+                                Console.WriteLine(foundcustomer.CurrentOrder);
+                                Console.WriteLine(i);
+                            }
+
+                            
                         }
-                        else if (foundcustomer.Rewards.Tier == "Ordinary")
+                        else
                         {
-                            // Display regular member queue
-                            DisplayOrder(ordersQueue);
+                            Console.WriteLine("NA");
                         }
                         try
                         {
-                            Console.WriteLine("[1]Modify an existing Ice cream.");
+                            Console.WriteLine("\n[1]Modify an existing Ice cream.");
                             Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
                             Console.WriteLine("[3]Delete an existing Ice cream from the order.");
                             Console.Write("What would you like to do: ");
@@ -565,6 +574,7 @@ namespace S10258524_PRG2Assignment
                                     Console.Write("\nEnter ice cream to modify: ");
                                     int id = int.Parse(Console.ReadLine());
                                     foundcustomer.CurrentOrder.ModifyIceCream(id);
+                                    break;
                                 }
                             }
                             else if (choice == 2)
@@ -610,6 +620,7 @@ namespace S10258524_PRG2Assignment
                                         DisplayOrder(ordersQueue);
                                         break;
                                     }
+
                                 }
                             }
                             else
@@ -830,8 +841,6 @@ namespace S10258524_PRG2Assignment
                     amt = order.CalculateTotal();
 
                     monthlyamt[month] += amt;
-
-
                     total += amt;
                 }
                 string[] months = { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };

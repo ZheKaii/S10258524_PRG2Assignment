@@ -197,7 +197,7 @@ namespace S10258524_PRG2Assignment
                 {
                     try
                     {
-                        Console.WriteLine("Enter number of toppings (0-4): ");
+                        Console.Write("Enter number of toppings (0-4): ");
                         top = int.Parse(Console.ReadLine());
                         if (top >= 0 && top <= 4)
                         {
