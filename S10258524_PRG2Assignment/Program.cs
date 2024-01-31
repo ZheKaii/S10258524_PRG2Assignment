@@ -445,7 +445,12 @@ namespace S10258524_PRG2Assignment
                         {
                             if (customer.Name == orderingcustomer)
                             {
+                                // Printing the information of the customer chosen
+
                                 Console.WriteLine($"The customer you selected is: {customer.Name}, {customer.MemberId}");
+
+                                // Using the makeorder method to make an order for the customer
+
                                 customer.MakeOrder();
                                 if (customer.Rewards.Tier == "Gold")
                                 {
