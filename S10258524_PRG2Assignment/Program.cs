@@ -259,7 +259,7 @@ namespace S10258524_PRG2Assignment
                             {
                                 Console.WriteLine($"Dipped: {cone.Dipped}");
                             }
-
+                            // Display Waffle flavour
                             if (icecream is Waffle waffle)
                             {
                                 Console.WriteLine($"Waffle Flavour: {waffle.WaffleFlavour}");
@@ -273,15 +273,18 @@ namespace S10258524_PRG2Assignment
                     Console.WriteLine("NA");
                 }
             }
+            // Making a method to remove order from the queue
             void removeQueue(Queue<Order> queue, int index)
             {
                 Queue<Order> tempQueue = new Queue<Order>();
+                // Store order in a temporary queue
                 for (int i = 0; i < index && queue.Count > 0; i++)
                 {
                     tempQueue.Enqueue(queue.Dequeue());
                 }
                 if (queue.Count > 0)
                 {
+                    // remove the order 
                     Order removedOrder = queue.Dequeue();
                     Console.WriteLine("\nIce cream is removed.");
                 }
@@ -330,6 +333,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else
                 {
+                    // Display gold member queue
                     DisplayOrder(goldenordersQueue);
                 }
                 Console.WriteLine("Regular Member Queue:");
@@ -339,6 +343,8 @@ namespace S10258524_PRG2Assignment
                 }
                 else
                 {
+
+                    // Display regular member queue
                     DisplayOrder(ordersQueue);
                 }
             }
@@ -463,46 +469,41 @@ namespace S10258524_PRG2Assignment
             {
                 while (true)
                 {
-                    try
-                    {   //print the customer name
-                        Option1(customers);
+                    // Print the customer detail
+                    Option1(customers);
 
-                        Console.Write("Please select a customer from the list (capitalize the first letter): ");
-                        string find = Console.ReadLine();
-                        Customer foundcustomer = Search(customers, find);
-                        int memberid = foundcustomer.MemberId;
-                        if (foundcustomer == null)
+                    Console.Write("Please select a customer from the list (capitalize the first letter): ");
+                    string find = Console.ReadLine();
+                    // Search for customer and store in found customer
+                    Customer foundcustomer = Search(customers, find);
+                    if (foundcustomer == null)
+                    {
+                        Console.WriteLine("Unable to find the customer name. Please try again.");
+                    }
+                    else
+                    {
+                        if (foundcustomer.OrderHistory != null)
                         {
-                            Console.WriteLine("Unable to find the customer name. Please try again.");
+                            // Display past order
+                            Console.WriteLine("Order Details (Past Orders):");
+                            DisplayOrder(new Queue<Order>(foundcustomer.OrderHistory));
                         }
-                        else
-                        {
-                          
-                            if (foundcustomer.OrderHistory != null)
-                            {
-                                Console.WriteLine("Order Details (Past Orders):");
-                                DisplayOrder(new Queue<Order>(foundcustomer.OrderHistory));
-                            }
 
-                            Console.WriteLine();
-                            Console.WriteLine("Order Details (Current Orders):");
-                            if (foundcustomer.Rewards.Tier == "Gold")
-                            {
-                                DisplayOrder(goldenordersQueue);
-                            }
-                            else if (foundcustomer.Rewards.Tier == "Ordinary")
-                            {
-                                DisplayOrder(ordersQueue);
-                            }
+                        Console.WriteLine();
+                        Console.WriteLine("Order Details (Current Orders):");
+                        if (foundcustomer.Rewards.Tier == "Gold")
+                        {
+                            // Display gold member queue
+                            DisplayOrder(goldenordersQueue);
+                        }
+                        else if (foundcustomer.Rewards.Tier == "Ordinary")
+                        {
+                            // Display regular member queue
+                            DisplayOrder(ordersQueue);
                         }
                         break;
                     }
-                    
-                    catch (Exception)
-                    {
-                        Console.WriteLine("error");
-                        throw;
-                    }
+
                 }  
             }
 
@@ -510,89 +511,111 @@ namespace S10258524_PRG2Assignment
 
             void Option6()
             {
-                Option1(customers);
-                Console.Write("Please select a customer from the list (capitalize the first letter): ");
-                string find = Console.ReadLine();
-                Customer foundcustomer = Search(customers, find);
-                if (foundcustomer == null)
+                while (true)
                 {
-                    Console.WriteLine("Customer not found");
-                }
-                else
-                {
-                    Console.WriteLine("Order Details (Current Orders):");
-                    if (foundcustomer.Rewards.Tier == "Gold")
+                    // Print the customer details
+                    Option1(customers);
+                    Console.Write("Please select a customer from the list (capitalize the first letter): ");
+                    string find = Console.ReadLine();
+                    // Search for customer and store in found customer
+                    Customer foundcustomer = Search(customers, find);
+                    if (foundcustomer == null)
                     {
-                        DisplayOrder(goldenordersQueue);
-                    }
-                    else if (foundcustomer.Rewards.Tier == "Ordinary")
-                    {
-                        DisplayOrder(ordersQueue);
-                    }
-
-                    Console.WriteLine("[1]Modify an existing Ice cream.");
-                    Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
-                    Console.WriteLine("[3]Delete an existing Ice cream from the order.");
-                    Console.Write("What would you like to do: ");
-                    int choice = int.Parse(Console.ReadLine());
-                    if (choice == 1)
-                    {
-                        if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
-                        {
-                            Console.WriteLine("No Ice Cream to modify.");
-                        }
-                        else
-                        {
-                            Console.Write("\nEnter ice cream to modify: ");
-                            int id = int.Parse(Console.ReadLine());
-                            foundcustomer.CurrentOrder.ModifyIceCream(id);
-                        }
-                    }
-                    else if (choice == 2)
-                    {
-                        foundcustomer.MakeOrder();
-                        if (foundcustomer.Rewards.Tier == "Gold")
-                        {
-                            goldenordersQueue.Enqueue(foundcustomer.CurrentOrder);
-                            Console.WriteLine("\nYou made a successful order in the gold queue!!");
-                        }
-                        else
-                        {
-                            ordersQueue.Enqueue(foundcustomer.CurrentOrder);
-                            Console.WriteLine("\nYou made a successful order in the normal queue!!");
-                        }
-                    }
-                    else if (choice == 3)
-                    {
-                        if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
-                        {
-                            Console.WriteLine("No Ice Cream to delete.");
-                        }
-                        else
-                        {
-                            Console.Write("Enter order Index: ");
-                            int deleteindex = int.Parse(Console.ReadLine())-1;
-                            //foundcustomer.CurrentOrder.DeleteIceCream(deleteindex);
-                            if (foundcustomer.Rewards.Tier == "Gold")
-                            {
-                                removeQueue(goldenordersQueue, deleteindex);
-                                Console.WriteLine("\nReaming Ice cream: ");
-                                DisplayOrder(goldenordersQueue);
-                                
-                            }
-                            else
-                            {
-                                removeQueue(ordersQueue, deleteindex);
-                                Console.WriteLine("\nReaming Ice cream: ");
-                                DisplayOrder(ordersQueue);
-                            }
-                        }
+                        Console.WriteLine("Customer not found. Try again.");
+                        continue;
                     }
                     else
                     {
-                        Console.WriteLine("Invalid Input.");
+                        Console.WriteLine("Order Details (Current Orders):");
+                        if (foundcustomer.Rewards.Tier == "Gold")
+                        {
+                            // Display gold member queue
+                            DisplayOrder(goldenordersQueue);
+                        }
+                        else if (foundcustomer.Rewards.Tier == "Ordinary")
+                        {
+                            // Display regular member queue
+                            DisplayOrder(ordersQueue);
+                        }
+                        try
+                        {
+                            Console.WriteLine("[1]Modify an existing Ice cream.");
+                            Console.WriteLine("[2]Add an entirely new Ice cream to the order.");
+                            Console.WriteLine("[3]Delete an existing Ice cream from the order.");
+                            Console.Write("What would you like to do: ");
+                            int choice = int.Parse(Console.ReadLine());
+                            if (choice == 1)
+                            {
+                                if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
+                                {
+                                    Console.WriteLine("No Ice Cream to modify.");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.Write("\nEnter ice cream to modify: ");
+                                    int id = int.Parse(Console.ReadLine());
+                                    foundcustomer.CurrentOrder.ModifyIceCream(id);
+                                }
+                            }
+                            else if (choice == 2)
+                            {
+                                foundcustomer.MakeOrder();
+                                if (foundcustomer.Rewards.Tier == "Gold")
+                                {
+                                    goldenordersQueue.Enqueue(foundcustomer.CurrentOrder);
+                                    Console.WriteLine("\nYou made a successful order in the gold queue!!");
+                                    break;
+                                }
+                                else
+                                {
+                                    ordersQueue.Enqueue(foundcustomer.CurrentOrder);
+                                    Console.WriteLine("\nYou made a successful order in the normal queue!!");
+                                    break;
+                                }
+                            }
+                            else if (choice == 3)
+                            {
+                                if (foundcustomer.CurrentOrder.IceCreamList.Any() == false)
+                                {
+                                    Console.WriteLine("No Ice Cream to delete.");
+                                    break;
+                                }
+                                else
+                                {
+                                    Console.Write("Enter order Index: ");
+                                    int deleteindex = int.Parse(Console.ReadLine()) - 1;
+                                    //foundcustomer.CurrentOrder.DeleteIceCream(deleteindex);
+                                    if (foundcustomer.Rewards.Tier == "Gold")
+                                    {
+                                        removeQueue(goldenordersQueue, deleteindex);
+                                        Console.WriteLine("\nReaming Ice cream: ");
+                                        DisplayOrder(goldenordersQueue);
+                                        break;
+
+                                    }
+                                    else
+                                    {
+                                        removeQueue(ordersQueue, deleteindex);
+                                        Console.WriteLine("\nReaming Ice cream: ");
+                                        DisplayOrder(ordersQueue);
+                                        break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Please enter a nnumber from 1-3");
+                            }
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Please enter a number.");
+                            
+                        }
+                        
                     }
-                }             
+                }
             }
 
             // Advanced Feature (a) - Heng Zhe Kai
@@ -747,10 +770,31 @@ namespace S10258524_PRG2Assignment
             //Advanced feature b (Gan Yu Hong)
             void option8(List<Order> orederlist)
             {
+                int year = 0;
                 Console.WriteLine("\nDisplay monthly charged amounts breakdown & total charged amounts for the year.\n");
-                //prompt for year and store in var year
-                Console.Write("Enter the year: ");
-                int year = int.Parse(Console.ReadLine());
+                while (true)
+                {
+                    try
+                    {
+                        
+                        //prompt for year and store in var year
+                        Console.Write("Enter the year: ");
+                        year = int.Parse(Console.ReadLine());
+                        if (year >=2000 && year <= 2100)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Please enter a year between 2000 to 2100");
+                        }
+                        
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("Please enter a year.");
+                    }
+                }
 
                 List<Order> yearList = new List<Order>();
                 Dictionary<int, double> monthlyamt = new Dictionary<int, double>();
@@ -787,9 +831,9 @@ namespace S10258524_PRG2Assignment
 
                 for (int i = 0; i < months.Length; i++)
                 {
-                    Console.WriteLine($"{months[i]} {year}:\t${monthlyamt[i+1]:F2}");
+                    Console.WriteLine($"{months[i]} {year}:    ${monthlyamt[i+1]:F2}");
                 }
-                Console.WriteLine($"\nTotal: ${total:F2}");
+                Console.WriteLine($"\nTotal:\t     ${total:F2}");
 
             }
 
@@ -840,7 +884,7 @@ namespace S10258524_PRG2Assignment
                 }
                 else
                 {
-                    Console.WriteLine("Please choose another option.");
+                    Console.WriteLine("Option does not exist. Please choose another option.");
                 }
             }
         }
