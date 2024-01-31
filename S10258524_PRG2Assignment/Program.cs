@@ -55,6 +55,8 @@ namespace S10258524_PRG2Assignment
             List<Order> orders = new List<Order>();
             Queue<Order> ordersQueue = new Queue<Order>();
             Queue<Order> goldenordersQueue = new Queue<Order>();
+            List<Order> yearList = new List<Order>();
+            Dictionary<int, double> monthlyamt = new Dictionary<int, double>();
 
             // All our extra methods 
 
@@ -273,7 +275,9 @@ namespace S10258524_PRG2Assignment
                     Console.WriteLine("NA");
                 }
             }
+
             // Making a method to remove order from the queue
+
             void removeQueue(Queue<Order> queue, int index)
             {
                 Queue<Order> tempQueue = new Queue<Order>();
@@ -796,9 +800,7 @@ namespace S10258524_PRG2Assignment
                     }
                 }
 
-                List<Order> yearList = new List<Order>();
-                Dictionary<int, double> monthlyamt = new Dictionary<int, double>();
-                double total =0;
+                double total = 0;
 
                 foreach (Order order in orederlist) 
                 { 
